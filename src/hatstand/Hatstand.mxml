@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hatstand:HatstandBase xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:hatstand="hatstand.*"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   backgroundColor="0x3f3f3f">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	
+	
+</hatstand:HatstandBase>
