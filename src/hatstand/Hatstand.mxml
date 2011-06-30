@@ -4,6 +4,7 @@
 			   xmlns:hatstand="hatstand.*"
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
 			   backgroundColor="0x3f3f3f">
+
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
