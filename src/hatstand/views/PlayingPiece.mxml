@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:PlayingPieceViewBase xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							xmlns:s="library://ns.adobe.com/flex/spark" 
+							xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="hatstand.views.*"
+							x="{ Number(draughtsPiece.position.getItemAt(0))* 30 }" y="{ Number(draughtsPiece.position.getItemAt(1)) * 30}">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Ellipse width="30" height="30">
+		<s:stroke>
+			<s:LinearGradientStroke>
+				<s:GradientEntry color="#444444"/>
+				<s:GradientEntry color="#EEEEEE"/>
+			</s:LinearGradientStroke>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="{ playingPieceColor }"/>
+		</s:fill>
+	</s:Ellipse>
+	
+</views:PlayingPieceViewBase>

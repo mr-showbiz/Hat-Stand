@@ -2,7 +2,10 @@ package hatstand.models
 {
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
+	
+	import mx.collections.ArrayCollection;
 
+	[Bindable]
 	public class DraughtsPiece implements IDraughtsPiece
 	{
 		public static const DIRECTION_UP:int = 0;
@@ -10,9 +13,9 @@ package hatstand.models
 		public static const DIRECTION_ALL:int = 2;
 		
 		private var _direction:int;
-		private var _position:Array;
+		private var _position:ArrayCollection;
 		
-		public function DraughtsPiece(direction:int, position:Array)
+		public function DraughtsPiece(direction:int, position:ArrayCollection)
 		{
 			_direction = direction;
 			_position = position;
@@ -28,12 +31,12 @@ package hatstand.models
 			_direction = value;
 		}
 		
-		public function set position(value:Array) : void
+		public function set position(value:ArrayCollection) : void
 		{
 			_position = value; 
 		}
 		
-		public function get position() : Array
+		public function get position() : ArrayCollection
 		{
 			return _position;
 		}

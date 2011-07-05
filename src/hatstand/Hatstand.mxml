@@ -8,14 +8,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	
-	<fx:Script>
-		<![CDATA[
-			
-			
-		]]>
-	</fx:Script>
 
-	<s:Group id="gameBoard"/> 
+	<s:Group id="gameBoard" horizontalCenter="0" verticalCenter="0"/> 
 	
-	</hatstand:HatstandBase>
+</hatstand:HatstandBase>

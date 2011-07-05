@@ -2,6 +2,7 @@ package hatstand
 {
 	import hatstand.models.DraughtsPiece;
 	import hatstand.models.Game;
+	import hatstand.views.PlayingPiece;
 	
 	import mx.collections.ArrayCollection;
 	import mx.core.FlexVersion;
@@ -35,17 +36,13 @@ package hatstand
 	
 		private function positionPieces(pieces:ArrayCollection, color:uint) : void
 		{
-			var pieceSize:int = 40;
 			for each(var piece:DraughtsPiece in pieces)
 			{
-				var el:Ellipse = new Ellipse();
-				el.fill = new SolidColor(color);
-				el.width = pieceSize;
-				el.height = pieceSize;
-				el.x = piece.position[0] *pieceSize;
-				el.y = piece.position[1] *pieceSize;
-				
-				gameBoard.addElement(el);
+				var playingPiece:PlayingPiece = new PlayingPiece();
+				playingPiece.draughtsPiece = piece;
+				playingPiece.playingPieceColor = color;
+
+				gameBoard.addElement(playingPiece);
 			}
 		}
 
