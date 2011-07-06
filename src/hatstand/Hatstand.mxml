@@ -16,6 +16,6 @@
 		]]>
 	</fx:Script>
 
-	<s:Group id="gameBoard"/> 
+	<s:Group id="gameBoard" horizontalCenter="0" verticalCenter="0"/> 
 	
 	</hatstand:HatstandBase>
