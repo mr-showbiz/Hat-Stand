@@ -14,4 +14,9 @@
 		<s:Group id="playingPiecesContainer" />
 	</s:Group>
 	
+	<fx:Private>
+		Make TileList for the gameboard.
+		Vertically invert the coords for the playing pieces. So 0,0 is the top left.
+	</fx:Private>
+	
 </hatstand:HatstandBase>

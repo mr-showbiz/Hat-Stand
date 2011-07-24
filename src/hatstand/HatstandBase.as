@@ -8,14 +8,10 @@ package hatstand
 	import hatstand.views.PlayingPiece;
 	
 	import mx.collections.ArrayCollection;
-	import mx.core.FlexVersion;
 	import mx.events.FlexEvent;
-	import mx.graphics.IFill;
-	import mx.graphics.SolidColor;
 	
 	import spark.components.Application;
 	import spark.components.Group;
-	import spark.primitives.Ellipse;
 	
 	public class HatstandBase extends Application
 	{
