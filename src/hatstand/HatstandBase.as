@@ -1,7 +1,10 @@
 package hatstand 
 {
+	import flash.events.MouseEvent;
+	
 	import hatstand.models.DraughtsPiece;
 	import hatstand.models.Game;
+	import hatstand.views.GameBoardView;
 	import hatstand.views.PlayingPiece;
 	
 	import mx.collections.ArrayCollection;
@@ -17,13 +20,13 @@ package hatstand
 	public class HatstandBase extends Application
 	{
 		public var newGame:Game;
-		public var gameBoard:Group;
+		public var playingPiecesContainer:Group;
+		public var gameBoard:GameBoardView;
 		
 		public function HatstandBase()
 		{
 			super();
 			 
-			
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 			newGame = new Game();
 		}
@@ -41,8 +44,11 @@ package hatstand
 				var playingPiece:PlayingPiece = new PlayingPiece();
 				playingPiece.draughtsPiece = piece;
 				playingPiece.playingPieceColor = color;
+				playingPiece.addEventListener(MouseEvent.CLICK, function (e:MouseEvent) : void {
+					gameBoard.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
+				});
 
-				gameBoard.addElement(playingPiece);
+				playingPiecesContainer.addElement(playingPiece);
 			}
 		}
 

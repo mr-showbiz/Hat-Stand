@@ -3,12 +3,15 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:hatstand="hatstand.*"
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
-			   backgroundColor="0x3f3f3f">
+			   backgroundColor="0x3f3f3f" xmlns:views="hatstand.views.*">
 
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 
-	<s:Group id="gameBoard" horizontalCenter="0" verticalCenter="0"/> 
+	<s:Group id="gameboardContainer" horizontalCenter="0" verticalCenter="0">
+		<views:GameBoardView id="gameBoard"/>
+		<s:Group id="playingPiecesContainer" />
+	</s:Group>
 	
 </hatstand:HatstandBase>

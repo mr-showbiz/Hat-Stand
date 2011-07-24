@@ -1,5 +1,6 @@
 package hatstand.views
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import hatstand.models.DraughtsPiece;
@@ -21,7 +22,7 @@ package hatstand.views
 		{
 			_draughtsPiece = value;
 			
-			addEventListener(MouseEvent.CLICK, onMouseClick);
+//			addEventListener(MouseEvent.CLICK, onMouseClick);
 			addEventListener(MouseEvent.ROLL_OVER, onRollOver);
 			addEventListener(MouseEvent.ROLL_OUT, onRollOut);
 		}
@@ -31,11 +32,11 @@ package hatstand.views
 			return _draughtsPiece;
 		}
 		
-		private function onMouseClick(e:MouseEvent) : void
-		{
-			
-		}
-		
+//		private function onMouseClick(e:MouseEvent) : void
+//		{
+//			dispatchEvent(e);
+//		}
+//		
 		private function onRollOver(e:MouseEvent) : void
 		{
 			this.filters = [ new GlowFilter(0xdd2222, 0.6, 5, 5, 2) ];
