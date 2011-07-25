@@ -15,9 +15,9 @@ package hatstand
 	
 	public class HatstandBase extends Application
 	{
-		public var newGame:Game;
+		[Bindable] public var newGame:Game;
 		public var playingPiecesContainer:Group;
-		public var gameBoard:GameBoardView;
+		public var gameBoardView:GameBoardView;
 		
 		public function HatstandBase()
 		{
@@ -41,7 +41,7 @@ package hatstand
 				playingPiece.draughtsPiece = piece;
 				playingPiece.playingPieceColor = color;
 				playingPiece.addEventListener(MouseEvent.CLICK, function (e:MouseEvent) : void {
-					gameBoard.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
+					gameBoardView.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
 				});
 
 				playingPiecesContainer.addElement(playingPiece);

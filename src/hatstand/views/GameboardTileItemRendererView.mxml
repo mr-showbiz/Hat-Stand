@@ -2,17 +2,17 @@
 <views:GameboardTileItemRendererViewBase xmlns:fx="http://ns.adobe.com/mxml/2009" 
 								 xmlns:s="library://ns.adobe.com/flex/spark" 
 								 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="hatstand.views.*"
-								 width="30" height="30">
+								 width="30" height="30" autoDrawBackground="false" filters.hovered="{ [ hoverGlow ] }">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:GlowFilter id="hoverGlow" blurX="3" blurY="3" color="#72B43A" inner="true" strength="10" alpha="1"/>
 	</fx:Declarations>
-	
-<!--	<s:Rect top="0" right="0" bottom="0" left="0">
-		<s:fill>
-			<s:SolidColor color="{ tileColor }"/>
-		</s:fill>
-	</s:Rect>-->
-	
-	<!--<s:Label text="{ itemIndex }" color="red" horizontalCenter="0" verticalCenter="0"/>-->
+
+	<views:states>
+		<s:State name="normal"/>
+		<s:State name="hovered"/>
+	</views:states>
+
+	<!--<s:Label text="{tile.position.getItemAt(0) + ' ' + tile.position.getItemAt(1)}" color="red" horizontalCenter="0" verticalCenter="0" fontSize="9"/>-->
 	
 </views:GameboardTileItemRendererViewBase>

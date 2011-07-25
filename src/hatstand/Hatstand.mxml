@@ -10,7 +10,7 @@
 	</fx:Declarations>
 
 	<s:Group id="gameboardContainer" horizontalCenter="0" verticalCenter="0">
-		<views:GameBoardView id="gameBoard"/>
+		<views:GameBoardView id="gameBoardView" gameBoard="{ newGame.gameBoard }"/>
 		<s:Group id="playingPiecesContainer" />
 	</s:Group>
 	
