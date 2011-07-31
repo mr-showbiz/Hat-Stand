@@ -6,7 +6,7 @@ package hatstand.models
 	import mx.collections.ArrayCollection;
 
 	[Bindable]
-	public class DraughtsPiece implements IDraughtsPiece
+	public class DraughtsPiece extends EventDispatcher implements IDraughtsPiece
 	{
 		public static const DIRECTION_UP:int = 0;
 		public static const DIRECTION_DOWN:int = 1;
@@ -40,6 +40,5 @@ package hatstand.models
 		{
 			return _position;
 		}
-	
 	}
 }

@@ -41,12 +41,11 @@ package hatstand
 				playingPiece.draughtsPiece = piece;
 				playingPiece.playingPieceColor = color;
 				playingPiece.addEventListener(MouseEvent.CLICK, function (e:MouseEvent) : void {
-					gameBoardView.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
+					gameBoardView.gameBoard.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
 				});
 
 				playingPiecesContainer.addElement(playingPiece);
 			}
 		}
-
 	}
 }

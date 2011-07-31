@@ -19,7 +19,7 @@
 			
 			private function chosen(e:IndexChangeEvent) : void
 			{
-				selectedTile = gameTiles.selectedItem as Tile;
+				gameBoard.selectedTile = gameTiles.selectedItem as Tile;
 			}
 		]]>
 	</fx:Script>

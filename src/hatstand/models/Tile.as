@@ -5,6 +5,7 @@ package hatstand.models
 	public class Tile
 	{
 		private var _position:ArrayCollection;
+		private var _showHighlight:Boolean;
 		
 		public function Tile(x:int, y:int)
 		{
@@ -15,5 +16,9 @@ package hatstand.models
 		{
 			return _position;
 		}
+		
+		[Bindable]
+		public function set showHighlight(value:Boolean) : void { _showHighlight = value; }
+		public function get showHighlight() : Boolean { return _showHighlight; }
 	}
 }
