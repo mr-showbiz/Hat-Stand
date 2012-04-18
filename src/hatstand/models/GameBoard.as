@@ -40,7 +40,7 @@ package hatstand.models
 		public function set selectedPlayingPiece(value:DraughtsPiece) : void 
 		{ 
 			_selectedPlayingPiece = value;
-			var possibleMoves:ArrayCollection = Rules.instance.validateMoves(_selectedPlayingPiece);
+			var possibleMoves:ArrayCollection = Rules.getInstance.validateMoves(_selectedPlayingPiece);
 			
 			for each(var tile:Tile in tiles)
 			{
