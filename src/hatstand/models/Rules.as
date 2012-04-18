@@ -4,7 +4,7 @@ package hatstand.models
 
 	public class Rules
 	{
-		public static var _instance:Rules;
+		private static var _instance:Rules;
 		
 		public function Rules()
 		{
@@ -20,6 +20,7 @@ package hatstand.models
 			return new ArrayCollection();
 		}
 		
+		//Only go diagnal. 1 space in front
 		private function rule1() : void
 		{
 			
