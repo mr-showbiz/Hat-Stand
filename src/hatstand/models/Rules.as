@@ -10,18 +10,19 @@ package hatstand.models
 		{
 		}
 		
-		public function getInstance() : Rules
+		public static function getInstance() : Rules
 		{
-			if (_instance == null) {
-				_instance = new Rules();
-			}
-			return _instance;
+			return _instance ? _instance : _instance = new Rules();
 		}
 		
 		public function validateMoves(draughtPiece:IDraughtsPiece) : ArrayCollection
 		{
 			return new ArrayCollection();
 		}
+		
+		private function rule1() : void
+		{
 			
+		}
 	}
 }
