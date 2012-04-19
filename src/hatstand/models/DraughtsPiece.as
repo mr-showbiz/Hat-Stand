@@ -15,12 +15,12 @@ package hatstand.models
 		public static const DIRECTION_ALL:int = 2;
 		
 		private var _direction:int;
-		private var coords:Array;
+		private var _coords:Array;
 		
 		public function DraughtsPiece(direction:int, startingCoords:Array)
 		{
 			_direction = direction;
-			coords = startingCoords;
+			_coords = startingCoords;
 		}
 		
 		public function get direction() : int
@@ -36,20 +36,25 @@ package hatstand.models
 		[Bindable(event="coordinatesUpdated")]
 		public function get x() : int
 		{
-			return coords[0];
+			return _coords[0];
 		}
 		
 		[Bindable(event="coordinatesUpdated")]
 		public function get y() : int
 		{
-			return coords[1];
+			return _coords[1];
 		}
 		
-		public function set coordinates(coordinateArray:Array) : void
+		public function set coordinate(coordinateArray:Array) : void
 		{
-			coords = coordinateArray;
+			_coords = coordinateArray;
 			
 			dispatchEvent(new Event("coordinatesUpdated"));
+		}
+		
+		public function get coordinate() : Array
+		{
+			return _coords;
 		}
 	}
 }

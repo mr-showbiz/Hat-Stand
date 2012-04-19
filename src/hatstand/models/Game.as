@@ -13,6 +13,9 @@ package hatstand.models
 			
 			//TODO: Hardcoded game board size. Bad
 			_gameBoard = new GameBoard(8);
+			
+			//Pass this new Game to Rules for later use
+			Rules.getInstance().game = this;
 		}
 		
 		public function get player1() : Player { return _player1; }

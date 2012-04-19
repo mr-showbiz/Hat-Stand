@@ -2,22 +2,22 @@ package hatstand.models
 {
 	import mx.collections.ArrayCollection;
 
+	/**
+	 * DOES THIS REALLY NEED TO BE A SINGLTON??!
+	 **/
+	
 	public class Rules
 	{
 		private static var _instance:Rules;
 		
 		private var selectedPlayingPiece:DraughtsPiece;
-		
-		public function Rules()
-		{
-		}
+		public var game:Game;
 		
 		public static function getInstance() : Rules
 		{
 			return _instance ? _instance : _instance = new Rules();
 		}
 		
-		//TODO: Change so it's not an ArrayCollection of ArrayCollections, it's just silly
 		public function validateMoves(draughtPiece:DraughtsPiece) : ArrayCollection
 		{
 			selectedPlayingPiece = draughtPiece;
@@ -25,7 +25,7 @@ package hatstand.models
 			return rule1();
 		}
 		
-		//Only go diagnal. 1 space in front
+		//Only go diagnal 1 space
 		private function rule1() : ArrayCollection
 		{
 			var validCoords:ArrayCollection = new ArrayCollection();
@@ -33,20 +33,52 @@ package hatstand.models
 			var newY:int;
 			if(selectedPlayingPiece.direction == DraughtsPiece.DIRECTION_UP)
 			{
-				newY = int(selectedPlayingPiece.y) + 1;
+				newY = selectedPlayingPiece.y + 1;
 			}
 			else
 			{
-				newY = int(selectedPlayingPiece.y) - 1;
+				newY = selectedPlayingPiece.y - 1;
 			}
 			
-			var newX:int = int(selectedPlayingPiece.x) - 1;
-			validCoords.addItem(new ArrayCollection([newX, newY]));
+			var newX:int = selectedPlayingPiece.x - 1;
+			validCoords.addItem([newX, newY]);
 			
-			var newX2:int = int(selectedPlayingPiece.x) + 1;
-			validCoords.addItem(new ArrayCollection([newX2, newY]));
+			var newX2:int = selectedPlayingPiece.x + 1;
+			validCoords.addItem([newX2, newY]);
 			
-			return validCoords; 
+			return rule2(validCoords); 
+		}
+		
+		//Are any of the spaces already taken
+		private function rule2(coordinateList:ArrayCollection) : ArrayCollection
+		{
+			var inValidCoords:ArrayCollection = new ArrayCollection();
+			for each(var coordinate:Array in coordinateList)
+			{
+				for each(var draughtsPiece:DraughtsPiece in game.player1.activePieces)
+				{
+					if(coordinate[0] == draughtsPiece.x && coordinate[1] == draughtsPiece.y) 
+					{
+						inValidCoords.addItem(coordinate);
+						break;
+					}
+				}
+				for each(var draughtsPiece:DraughtsPiece in game.player2.activePieces)
+				{
+					if(coordinate[0] == draughtsPiece.x && coordinate[1] == draughtsPiece.y) 
+					{
+						inValidCoords.addItem(coordinate);
+						break;
+					}
+				}
+			}
+			
+			for each(var inValidCoordinate:Array in inValidCoords)
+			{
+				coordinateList.removeItemAt(coordinateList.getItemIndex(inValidCoordinate));
+			}
+			
+			return coordinateList;
 		}
 	}
 }
