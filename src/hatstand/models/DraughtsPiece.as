@@ -1,10 +1,12 @@
 package hatstand.models
 {
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.events.MouseEvent;
 	
 	import mx.collections.ArrayCollection;
 
+	[Event(name="coordinatesUpdated",type="flash.events.Event")]
+	
 	[Bindable]
 	public class DraughtsPiece extends EventDispatcher implements IDraughtsPiece
 	{
@@ -13,12 +15,12 @@ package hatstand.models
 		public static const DIRECTION_ALL:int = 2;
 		
 		private var _direction:int;
-		private var _position:ArrayCollection;
+		private var coords:Array;
 		
-		public function DraughtsPiece(direction:int, position:ArrayCollection)
+		public function DraughtsPiece(direction:int, startingCoords:Array)
 		{
 			_direction = direction;
-			_position = position;
+			coords = startingCoords;
 		}
 		
 		public function get direction() : int
@@ -30,15 +32,24 @@ package hatstand.models
 		{
 			_direction = value;
 		}
-		
-		public function set position(value:ArrayCollection) : void
+
+		[Bindable(event="coordinatesUpdated")]
+		public function get x() : int
 		{
-			_position = value; 
+			return coords[0];
 		}
 		
-		public function get position() : ArrayCollection
+		[Bindable(event="coordinatesUpdated")]
+		public function get y() : int
 		{
-			return _position;
+			return coords[1];
+		}
+		
+		public function set coordinates(coordinateArray:Array) : void
+		{
+			coords = coordinateArray;
+			
+			dispatchEvent(new Event("coordinatesUpdated"));
 		}
 	}
 }

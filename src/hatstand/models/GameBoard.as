@@ -47,7 +47,7 @@ package hatstand.models
 				tile.showHighlight = false;
 				for each(var coord:ArrayCollection in possibleMoves)
 				{
-					if(coord.getItemAt(0) == tile.position.getItemAt(0) && coord.getItemAt(1) == tile.position.getItemAt(1))
+					if(coord.getItemAt(0) == tile.x && coord.getItemAt(1) == tile.y)
 					{
 						tile.showHighlight = true;
 					}
@@ -60,8 +60,7 @@ package hatstand.models
 			_selectedTile = value;
 			if(selectedTile && selectedPlayingPiece && selectedTile.showHighlight)
 			{
-				selectedPlayingPiece.position[0] = selectedTile.position.getItemAt(0);
-				selectedPlayingPiece.position[1] = selectedTile.position.getItemAt(1);
+				selectedPlayingPiece.coordinates = [selectedTile.x, selectedTile.y];
 			}
 		}
 		

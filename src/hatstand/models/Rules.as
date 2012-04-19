@@ -17,6 +17,7 @@ package hatstand.models
 			return _instance ? _instance : _instance = new Rules();
 		}
 		
+		//TODO: Change so it's not an ArrayCollection of ArrayCollections, it's just silly
 		public function validateMoves(draughtPiece:DraughtsPiece) : ArrayCollection
 		{
 			selectedPlayingPiece = draughtPiece;
@@ -32,17 +33,17 @@ package hatstand.models
 			var newY:int;
 			if(selectedPlayingPiece.direction == DraughtsPiece.DIRECTION_UP)
 			{
-				newY = int(selectedPlayingPiece.position.getItemAt(1)) + 1;
+				newY = int(selectedPlayingPiece.y) + 1;
 			}
 			else
 			{
-				newY = int(selectedPlayingPiece.position.getItemAt(1)) - 1;
+				newY = int(selectedPlayingPiece.y) - 1;
 			}
 			
-			var newX:int = int(selectedPlayingPiece.position.getItemAt(0)) - 1;
+			var newX:int = int(selectedPlayingPiece.x) - 1;
 			validCoords.addItem(new ArrayCollection([newX, newY]));
 			
-			var newX2:int = int(selectedPlayingPiece.position.getItemAt(0)) + 1;
+			var newX2:int = int(selectedPlayingPiece.x) + 1;
 			validCoords.addItem(new ArrayCollection([newX2, newY]));
 			
 			return validCoords; 

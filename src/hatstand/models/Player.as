@@ -26,7 +26,7 @@ package hatstand.models
 				var y:int = startYcoord;
 				while(y < startYcoord+3)
 				{
-					if((x%2 == 0 && y%2 == 0) || (x%2 > 0 && y%2 > 0)) pieces.addItem( new DraughtsPiece(direction, new ArrayCollection([x, y])));
+					if((x%2 == 0 && y%2 == 0) || (x%2 > 0 && y%2 > 0)) pieces.addItem( new DraughtsPiece(direction, [x, y]));
 					y++;
 				}
 			}

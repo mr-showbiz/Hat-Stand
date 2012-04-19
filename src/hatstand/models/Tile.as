@@ -4,17 +4,22 @@ package hatstand.models
 
 	public class Tile
 	{
-		private var _position:ArrayCollection;
 		private var _showHighlight:Boolean;
+		private var coords:Array;
 		
 		public function Tile(x:int, y:int)
 		{
-			_position = new ArrayCollection([x,y]);
+			coords = [x, y];
 		}
 		
-		public function get position() : ArrayCollection
+		public function get x() : int
 		{
-			return _position;
+			return coords[0];
+		}
+		
+		public function get y() : int
+		{
+			return coords[1];
 		}
 		
 		[Bindable]
