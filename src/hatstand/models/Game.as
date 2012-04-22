@@ -18,7 +18,7 @@ package hatstand.models
 			//TODO: Hardcoded game board size. Bad
 			_gameBoard = new GameBoard(8);
 			
-			_gameBoard.addEventListener("turnTaken", onTurnTaken);
+			_gameBoard.addEventListener("endOfTurn", onEndOfTurn);
 			
 			//Pass this new Game to Rules for later use
 			Rules.getInstance().game = this;
@@ -33,7 +33,7 @@ package hatstand.models
 		
 		public function get gameBoard() : GameBoard { return _gameBoard; }
 		
-		private function onTurnTaken(e:Event) : void
+		private function onEndOfTurn(e:Event) : void
 		{
 			activePlayer = activePlayer == _player1 ? _player2 : _player1;
 		}

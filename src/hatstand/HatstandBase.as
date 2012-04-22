@@ -40,6 +40,8 @@ package hatstand
 				var playingPiece:PlayingPiece = new PlayingPiece();
 				playingPiece.draughtsPiece = piece;
 				playingPiece.playingPieceColor = color;
+				
+				//This isn't the place for this event to be dealt with
 				playingPiece.addEventListener(MouseEvent.CLICK, function (e:MouseEvent) : void {
 					if(newGame.activePlayer == playingPiece.draughtsPiece.owner) gameBoardView.gameBoard.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
 				});
