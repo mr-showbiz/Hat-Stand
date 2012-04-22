@@ -11,12 +11,13 @@
 		<s:State name="normal"/>
 		<s:State name="hovered"/>
 	</views:states>
-
+	
 	<s:Rect top="0" right="0" bottom="0" left="0" visible="{ tile.showHighlight }">
 		<s:fill>
 			<s:SolidColor color="green" alpha="0.3"/>
 		</s:fill>
 	</s:Rect>
+	<s:Label text="{ tile.x },{tile.y}" color="green" fontSize="10"/>
 	
 	<!--<s:Label text="{tile.position.getItemAt(0) + ' ' + tile.position.getItemAt(1)}" color="red" horizontalCenter="0" verticalCenter="0" fontSize="9"/>-->
 	

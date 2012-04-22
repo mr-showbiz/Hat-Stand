@@ -16,11 +16,13 @@ package hatstand.models
 		
 		private var _direction:int;
 		private var _coords:Array;
+		private var _owner:Player;
 		
-		public function DraughtsPiece(direction:int, startingCoords:Array)
+		public function DraughtsPiece(direction:int, startingCoords:Array, owner:Player)
 		{
 			_direction = direction;
 			_coords = startingCoords;
+			_owner = owner;
 		}
 		
 		public function get direction() : int
@@ -56,5 +58,16 @@ package hatstand.models
 		{
 			return _coords;
 		}
+		
+		public function get owner() : Player
+		{
+			return _owner;
+		}
+		
+		public function set owner(value:Player) : void
+		{
+			_owner = value;
+		}
+		
 	}
 }

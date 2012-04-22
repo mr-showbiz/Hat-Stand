@@ -1,11 +1,6 @@
 package hatstand.models
 {
-	import flashx.textLayout.formats.Direction;
-	
-	import hatstand.views.PlayingPiece;
-	
 	import mx.collections.ArrayCollection;
-	import mx.rpc.events.InvokeEvent;
 
 	/**
 	 * DOES THIS REALLY NEED TO BE A SINGLTON??!
@@ -38,11 +33,11 @@ package hatstand.models
 			var newY:int;
 			if(selectedPlayingPiece.direction == DraughtsPiece.DIRECTION_UP)
 			{
-				newY = selectedPlayingPiece.y + 1;
+				newY = selectedPlayingPiece.y - 1;
 			}
 			else
 			{
-				newY = selectedPlayingPiece.y - 1;
+				newY = selectedPlayingPiece.y + 1;
 			}
 			
 			var newX:int = selectedPlayingPiece.x - 1;
@@ -91,7 +86,7 @@ package hatstand.models
 				  If our selected piece is heading up the board, we need to minus 1 from our invalid coordinate to 
 				  carry the diagonal through
 				*/
-				var yVariant:int = selectedPlayingPiece.direction == DraughtsPiece.DIRECTION_UP ? 1: -1;
+				var yVariant:int = selectedPlayingPiece.direction == DraughtsPiece.DIRECTION_UP ? -1: 1;
 				// hoppedCoord is the coord of the tile diagonally through the playing piece we are trying to hop over.
 				var hoppedCoord:Array = [coord[0] + xVariant, coord[1] + yVariant];
 				if(!isCoordinateOccupied(hoppedCoord, allActivePieces)) availableJumpedCoords.addItem(hoppedCoord); 
@@ -100,6 +95,7 @@ package hatstand.models
 			return availableJumpedCoords;
 		}
 		
+		//Iterates through supplied playingPieces and checks their coordinates with the supplied coorindate param
 		private function isCoordinateOccupied(coordinate:Array, playingPieces:ArrayCollection) : Boolean
 		{
 			var coordinateOccupied:Boolean;

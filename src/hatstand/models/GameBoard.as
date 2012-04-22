@@ -1,12 +1,15 @@
 package hatstand.models
 {
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	
 	import mx.collections.ArrayCollection;
 
 	/**
 	 * Keeps track of the tiles 
 	 */
 	
-	public class GameBoard
+	public class GameBoard extends EventDispatcher
 	{
 		private var _tiles:ArrayCollection;
 		private var _selectedPlayingPiece:DraughtsPiece;
@@ -61,6 +64,8 @@ package hatstand.models
 			if(selectedTile && selectedPlayingPiece && selectedTile.showHighlight)
 			{
 				selectedPlayingPiece.coordinate = [selectedTile.x, selectedTile.y];
+				
+				dispatchEvent(new Event("turnTaken"));
 			}
 		}
 		

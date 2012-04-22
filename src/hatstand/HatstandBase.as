@@ -29,8 +29,8 @@ package hatstand
 		
 		private function onCreationComplete(e:FlexEvent): void
 		{
-			positionPieces(newGame.player1.activePieces, 0xeeeeee);
-			positionPieces(newGame.player2.activePieces, 0x333333);
+			positionPieces(newGame.player1.activePieces, 0x333333);
+			positionPieces(newGame.player2.activePieces, 0xeeeeee);
 		}
 	
 		private function positionPieces(pieces:ArrayCollection, color:uint) : void
@@ -41,7 +41,7 @@ package hatstand
 				playingPiece.draughtsPiece = piece;
 				playingPiece.playingPieceColor = color;
 				playingPiece.addEventListener(MouseEvent.CLICK, function (e:MouseEvent) : void {
-					gameBoardView.gameBoard.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
+					if(newGame.activePlayer == playingPiece.draughtsPiece.owner) gameBoardView.gameBoard.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
 				});
 
 				playingPiecesContainer.addElement(playingPiece);

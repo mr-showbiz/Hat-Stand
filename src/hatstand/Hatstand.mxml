@@ -5,16 +5,12 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
 			   backgroundColor="0x3f3f3f" xmlns:views="hatstand.views.*">
 
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
-
-	<s:Group id="gameboardContainer" horizontalCenter="0" verticalCenter="0">
-		<views:GameBoardView id="gameBoardView" gameBoard="{ newGame.gameBoard }"/>
-		<s:Group id="playingPiecesContainer" />
-	</s:Group>
-	
-	<fx:Private>
-	</fx:Private>
+	<s:HGroup horizontalCenter="0" verticalCenter="0">
+		<s:Label text="{ newGame.activePlayer.name }"/>
+		<s:Group id="gameboardContainer">
+			<views:GameBoardView id="gameBoardView" gameBoard="{ newGame.gameBoard }"/>
+			<s:Group id="playingPiecesContainer" />
+		</s:Group>	
+	</s:HGroup>
 	
 </hatstand:HatstandBase>
