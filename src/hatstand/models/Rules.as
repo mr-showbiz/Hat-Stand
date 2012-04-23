@@ -130,7 +130,8 @@ package hatstand.models
 			{
 				if(draughtsPiece.x == x && draughtsPiece.y == y) 
 				{
-					activePieces.removeItemAt(activePieces.getItemIndex(draughtsPiece));
+					
+					draughtsPiece.isActive = false;
 					break;
 				}
 			}

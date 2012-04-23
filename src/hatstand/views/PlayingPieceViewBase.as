@@ -21,8 +21,9 @@ package hatstand.views
 		public function set draughtsPiece(value:DraughtsPiece) : void
 		{
 			_draughtsPiece = value;
+
+			draughtsPiece.addEventListener("draughtsPieceCaptured", onDraughtsPieceCapture);
 			
-//			addEventListener(MouseEvent.CLICK, onMouseClick);
 			addEventListener(MouseEvent.ROLL_OVER, onRollOver);
 			addEventListener(MouseEvent.ROLL_OUT, onRollOut);
 		}
@@ -32,11 +33,6 @@ package hatstand.views
 			return _draughtsPiece;
 		}
 		
-//		private function onMouseClick(e:MouseEvent) : void
-//		{
-//			dispatchEvent(e);
-//		}
-//		
 		private function onRollOver(e:MouseEvent) : void
 		{
 			this.filters = [ new GlowFilter(0xdd2222, 0.6, 5, 5, 2) ];
@@ -45,6 +41,16 @@ package hatstand.views
 		private function onRollOut(e:MouseEvent) : void
 		{
 			this.filters = [ ];
+		}
+		
+		private function onDraughtsPieceCapture(e:Event) : void
+		{
+			visible = false;
+			
+			removeEventListener(MouseEvent.ROLL_OVER, onRollOver);
+			removeEventListener(MouseEvent.ROLL_OUT, onRollOut);
+			
+			draughtsPiece.removeEventListener("draughtsPieceCaptured", onDraughtsPieceCapture);
 		}
 	}
 }

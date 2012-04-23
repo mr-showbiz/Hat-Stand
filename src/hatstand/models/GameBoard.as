@@ -63,8 +63,11 @@ package hatstand.models
 			_selectedTile = value;
 			if(selectedTile && selectedPlayingPiece && selectedTile.showHighlight)
 			{
-				//If selected piece and end tile 
-				if(selectedTile.x - selectedPlayingPiece.x % 2 == 0) Rules.getInstance().removeJumpedPiece(selectedTile, selectedPlayingPiece);
+				//
+				if(selectedTile.x - selectedPlayingPiece.x % 2 == 0)
+				{
+					Rules.getInstance().removeJumpedPiece(selectedTile, selectedPlayingPiece);
+				}
 				
 				selectedPlayingPiece.coordinate = [selectedTile.x, selectedTile.y];
 				

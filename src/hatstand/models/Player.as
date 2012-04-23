@@ -1,11 +1,15 @@
 package hatstand.models
 {
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	
 	import mx.collections.ArrayCollection;
-	import mx.logging.Log;
+	import mx.events.CollectionEvent;
 
-	public class Player
+	public class Player extends EventDispatcher
 	{
-		private var _activePieces:ArrayCollection;
+		private var _playingPieces:ArrayCollection;
+		
 		[Bindable]public var name:String; 
 		
 		public function Player(direction:int)
@@ -14,12 +18,22 @@ package hatstand.models
 			var playerColour:String = direction == DraughtsPiece.DIRECTION_UP ? "Black" : "White";
 			name = "Player (" + playerColour + ")"; 
 			
-			if(direction == DraughtsPiece.DIRECTION_UP) _activePieces = generatePieces(direction, 5);
-			if(direction == DraughtsPiece.DIRECTION_DOWN) _activePieces = generatePieces(direction, 0);
-			if(!_activePieces) throw new Error("Error in creating playing pieces");
+			if(direction == DraughtsPiece.DIRECTION_UP) _playingPieces = generatePieces(direction, 5);
+			if(direction == DraughtsPiece.DIRECTION_DOWN) _playingPieces = generatePieces(direction, 0);
+			if(!_playingPieces) throw new Error("Error in creating playing pieces");
 		}
 		
-		public function get activePieces() : ArrayCollection { return _activePieces; }
+		public function get playingPieces() : ArrayCollection { return _playingPieces; }
+		
+		public function get activePieces() : ArrayCollection
+		{
+			var pieces:ArrayCollection = new ArrayCollection();
+			for each(var draughtsPiece:DraughtsPiece in playingPieces)
+			{
+				if(draughtsPiece.isActive) pieces.addItem(draughtsPiece);
+			}
+			return pieces;
+		}
 		
 		private function generatePieces(direction:int, startYcoord:int) : ArrayCollection
 		{

@@ -17,6 +17,7 @@ package hatstand.models
 		private var _direction:int;
 		private var _coords:Array;
 		private var _owner:Player;
+		private var _isActive:Boolean = true;
 		
 		public function DraughtsPiece(direction:int, startingCoords:Array, owner:Player)
 		{
@@ -67,6 +68,17 @@ package hatstand.models
 		public function set owner(value:Player) : void
 		{
 			_owner = value;
+		}
+		
+		public function get isActive() : Boolean
+		{
+			return _isActive;
+		}
+		
+		public function set isActive(value:Boolean) : void
+		{
+			_isActive = value;
+			if(!isActive) dispatchEvent(new Event("draughtsPieceCaptured", true));
 		}
 		
 	}
