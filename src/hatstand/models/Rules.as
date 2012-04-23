@@ -4,6 +4,10 @@ package hatstand.models
 
 	/**
 	 * DOES THIS REALLY NEED TO BE A SINGLTON??!
+	 * 
+	 * 
+	 * Minimax decision theory
+	 * 
 	 **/
 	
 	public class Rules
@@ -120,6 +124,7 @@ package hatstand.models
 			var x:int = Math.max(targetTile.x, selectedDraughtsPiece.x) - 1;
 			var y:int = Math.max(targetTile.y, selectedDraughtsPiece.y) - 1;
 			
+			//Once removed from active pieces, we then need to remove the actual draughts piece from the view
 			var activePieces:ArrayCollection = game.activePlayer == game.player1 ? game.player2.activePieces : game.player1.activePieces;
 			for each(var draughtsPiece:DraughtsPiece in activePieces)
 			{
