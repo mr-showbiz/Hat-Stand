@@ -1,0 +1,8 @@
+Todo
+1) Remove highlight after movement
+2) Acknowledge end of game
+3) Startup screen
+4) Ability to start a new game
+
+Extras
+a) Add animation instead of just making the playing piece invisible

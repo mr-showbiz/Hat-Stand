@@ -64,7 +64,7 @@ package hatstand.models
 			if(selectedTile && selectedPlayingPiece && selectedTile.showHighlight)
 			{
 				//
-				if(selectedTile.x - selectedPlayingPiece.x % 2 == 0)
+				if((selectedTile.x - selectedPlayingPiece.x) % 2 == 0)
 				{
 					Rules.getInstance().removeJumpedPiece(selectedTile, selectedPlayingPiece);
 				}
