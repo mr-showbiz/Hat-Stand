@@ -15,6 +15,8 @@ package hatstand.models
 		private var _selectedPlayingPiece:DraughtsPiece;
 		private var _selectedTile:Tile;
 		
+		private var validTiles:ArrayCollection = new ArrayCollection();
+		
 		public function GameBoard(boardSize:int)
 		{
 			_tiles = createTiles(boardSize);
@@ -43,6 +45,7 @@ package hatstand.models
 		public function set selectedPlayingPiece(value:DraughtsPiece) : void 
 		{ 
 			_selectedPlayingPiece = value;
+			
 			var possibleMoves:ArrayCollection = Rules.getInstance().validateMoves(_selectedPlayingPiece);
 			
 			for each(var tile:Tile in tiles)
@@ -50,20 +53,18 @@ package hatstand.models
 				tile.showHighlight = false;
 				for each(var coord:Array in possibleMoves)
 				{
-					if(coord[0] == tile.x && coord[1] == tile.y)
-					{
-						tile.showHighlight = true;
-					}
+					if(coord[0] == tile.x && coord[1] == tile.y) validTiles.addItem(tile);
 				}
 			}
 		}
-		
+
+		public function get selectedTile() : Tile { return _selectedTile; }
 		public function set selectedTile(value:Tile) : void
 		{
 			_selectedTile = value;
-			if(selectedTile && selectedPlayingPiece && selectedTile.showHighlight)
+			if(selectedTile && selectedPlayingPiece && validTiles.contains(_selectedTile))
 			{
-				//
+				
 				if((selectedTile.x - selectedPlayingPiece.x) % 2 == 0)
 				{
 					Rules.getInstance().removeJumpedPiece(selectedTile, selectedPlayingPiece);
@@ -71,10 +72,14 @@ package hatstand.models
 				
 				selectedPlayingPiece.coordinate = [selectedTile.x, selectedTile.y];
 				
-				dispatchEvent(new Event("endOfTurn"));
+				endOfTurnCleanUp();
 			}
 		}
 		
-		public function get selectedTile() : Tile { return _selectedTile; }
+		private function endOfTurnCleanUp() : void
+		{
+			dispatchEvent(new Event("endOfTurn"));
+		}
+		
 	}
 }

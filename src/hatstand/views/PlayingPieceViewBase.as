@@ -4,9 +4,6 @@ package hatstand.views
 	import flash.events.MouseEvent;
 	
 	import hatstand.models.DraughtsPiece;
-	import hatstand.models.IDraughtsPiece;
-	
-	import mx.events.FlexEvent;
 	
 	import spark.components.Group;
 	import spark.filters.GlowFilter;

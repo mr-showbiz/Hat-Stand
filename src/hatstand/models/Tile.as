@@ -1,8 +1,10 @@
 package hatstand.models
 {
+	import flash.events.EventDispatcher;
+	
 	import mx.collections.ArrayCollection;
 
-	public class Tile
+	public class Tile extends EventDispatcher
 	{
 		private var _showHighlight:Boolean;
 		private var coords:Array;
