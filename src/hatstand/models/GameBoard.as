@@ -46,11 +46,11 @@ package hatstand.models
 		{ 
 			_selectedPlayingPiece = value;
 			
+			validTiles.removeAll();
 			var possibleMoves:ArrayCollection = Rules.getInstance().validateMoves(_selectedPlayingPiece);
 			
 			for each(var tile:Tile in tiles)
 			{
-				tile.showHighlight = false;
 				for each(var coord:Array in possibleMoves)
 				{
 					if(coord[0] == tile.x && coord[1] == tile.y) validTiles.addItem(tile);
@@ -71,6 +71,8 @@ package hatstand.models
 				}
 				
 				selectedPlayingPiece.coordinate = [selectedTile.x, selectedTile.y];
+				
+				validTiles.removeAll();
 				
 				endOfTurnCleanUp();
 			}

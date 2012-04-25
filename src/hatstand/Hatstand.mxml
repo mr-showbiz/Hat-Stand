@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <hatstand:HatstandBase xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:hatstand="hatstand.*"
-			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   backgroundColor="0x3f3f3f" xmlns:views="hatstand.views.*">
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:hatstand="hatstand.*"
+					   backgroundColor="0x3f3f3f" xmlns:views="hatstand.views.*">
 
-	<s:HGroup horizontalCenter="0" verticalCenter="0">
-		<s:Label text="{ newGame.activePlayer.name }"/>
-		<s:Group id="gameboardContainer">
-			<views:GameBoardView id="gameBoardView" gameBoard="{ newGame.gameBoard }"/>
-			<s:Group id="playingPiecesContainer" />
-		</s:Group>	
-	</s:HGroup>
+	<fx:Style source="Hatstand.css"/>
 	
 </hatstand:HatstandBase>

@@ -1,53 +1,36 @@
 package hatstand 
 {
-	import flash.events.MouseEvent;
+	import flash.events.Event;
 	
-	import hatstand.models.DraughtsPiece;
 	import hatstand.models.Game;
-	import hatstand.views.GameBoardView;
-	import hatstand.views.PlayingPiece;
-	
-	import mx.collections.ArrayCollection;
-	import mx.events.FlexEvent;
+	import hatstand.views.GameView;
+	import hatstand.views.StartScreenView;
 	
 	import spark.components.Application;
-	import spark.components.Group;
 	
 	public class HatstandBase extends Application
 	{
 		[Bindable] public var newGame:Game;
-		public var playingPiecesContainer:Group;
-		public var gameBoardView:GameBoardView;
+		
+		private var startScreen:StartScreenView;
 		
 		public function HatstandBase()
 		{
-			super();
-			 
-			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
-			newGame = new Game();
+			startScreen = new StartScreenView();
+			startScreen.addEventListener("startGame", onStartGame);
+			addElement(startScreen);
 		}
 		
-		private function onCreationComplete(e:FlexEvent): void
+		private function onStartGame(e:Event) : void
 		{
-			positionPieces(newGame.player1.activePieces, 0x333333);
-			positionPieces(newGame.player2.activePieces, 0xeeeeee);
-		}
-	
-		private function positionPieces(pieces:ArrayCollection, color:uint) : void
-		{
-			for each(var piece:DraughtsPiece in pieces)
-			{
-				var playingPiece:PlayingPiece = new PlayingPiece();
-				playingPiece.draughtsPiece = piece;
-				playingPiece.playingPieceColor = color;
-				
-				//This isn't the place for this event to be dealt with
-				playingPiece.addEventListener(MouseEvent.CLICK, function (e:MouseEvent) : void {
-					if(newGame.activePlayer == playingPiece.draughtsPiece.owner) gameBoardView.gameBoard.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
-				});
-
-				playingPiecesContainer.addElement(playingPiece);
-			}
+			startScreen.removeEventListener("startGame", onStartGame);
+			removeElement(startScreen);
+			
+			newGame = new Game();
+			
+			var gameView:GameView = new GameView();
+			gameView.game = newGame;
+			addElement(gameView);
 		}
 	}
 }

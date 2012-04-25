@@ -1,0 +1,8 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+
+@font-face { 
+	src: url("../assets/fonts/zxspectr.ttf"); 
+	fontFamily: zx; 
+	embedAsCFF: true; 
+}

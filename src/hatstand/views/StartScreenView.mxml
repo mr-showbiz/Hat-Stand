@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:StartScreenViewBase xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						   xmlns:s="library://ns.adobe.com/flex/spark" 
+						   xmlns:views="hatstand.views.*"
+						   styleName="spectrum"
+						   creationComplete="onCreationComplete()">
+	
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace views "hatstand.views.*";
+
+		.spectrum {
+			fontFamily: zx;
+			fontSize: 12;
+			color: white;
+		}
+	</fx:Style>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.DragSource;
+			import mx.events.DragEvent;
+			import mx.managers.DragManager;
+			
+			private var timer:Timer;
+			
+			private function onCreationComplete() : void
+			{
+				timer = new Timer(1300, 0);
+				timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) : void {
+					insertCoin.visible = !insertCoin.visible;
+				});
+				timer.start();
+			}
+			
+			private function mouseMoveHandler(event:MouseEvent):void 
+			{                
+				var dragInitiator:Image = Image(event.currentTarget);
+				var ds:DragSource = new DragSource();
+				ds.addData(dragInitiator, "img");               
+				
+				DragManager.doDrag(dragInitiator, ds, event);
+			}
+
+			private function dragEnterHandler(event:DragEvent):void {
+				if (event.dragSource.hasFormat("img"))
+				{
+					DragManager.acceptDragDrop(BorderContainer(event.currentTarget));
+				}
+			}
+			
+			private function dragDropHandler(event:DragEvent):void {
+				Image(event.dragInitiator).x = slot.x;
+				Image(event.dragInitiator).y = slot.y;
+				
+				fadeout.play();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:Fade id="fadeout" targets="{[ slot, coin ]}" alphaTo="0" effectEnd="{ dispatchEvent(new Event('startGame')) }"/>
+	</fx:Declarations>
+	
+	<s:VGroup x="20" y="20">
+		<s:Label text="Welcome to Ramsden 4 Draughts"/>	
+		
+		<s:Label id="insertCoin" text="Insert coin..."/>
+	</s:VGroup>
+	
+	<s:BorderContainer id="slot" x="20" y="100" width="60" height="62" dragEnter="dragEnterHandler(event)" dragDrop="dragDropHandler(event)" alpha="1"/>
+	
+	<s:Image id="coin" x="288" y="228" source="@Embed('../assets/interface/startScreen/10p.png')" mouseMove="mouseMoveHandler(event)" alpha="1"/>
+	
+	
+</views:StartScreenViewBase>

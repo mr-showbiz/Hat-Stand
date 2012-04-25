@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<views:GameViewBase xmlns:fx="http://ns.adobe.com/mxml/2009"
+					xmlns:s="library://ns.adobe.com/flex/spark" 
+					xmlns:views="hatstand.views.*"
+					horizontalCenter="0" verticalCenter="0">
+	
+	<s:HGroup horizontalCenter="0" verticalCenter="0">
+		<s:Label text="{ game.activePlayer.name }"/>
+		<s:Group id="gameboardContainer">
+			<views:GameBoardView id="gameBoardView" gameBoard="{ game.gameBoard }"/>
+			<s:Group id="playingPiecesContainer" />
+		</s:Group>	
+	</s:HGroup>
+	
+</views:GameViewBase>
