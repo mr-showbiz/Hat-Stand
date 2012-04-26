@@ -13,24 +13,41 @@ package hatstand
 		[Bindable] public var newGame:Game;
 		
 		private var startScreen:StartScreenView;
+		private var gameView:GameView;
 		
 		public function HatstandBase()
+		{
+			showStartScreen();
+		}
+		
+		private function showStartScreen() : void
 		{
 			startScreen = new StartScreenView();
 			startScreen.addEventListener("startGame", onStartGame);
 			addElement(startScreen);
 		}
-		
+				
 		private function onStartGame(e:Event) : void
 		{
 			startScreen.removeEventListener("startGame", onStartGame);
 			removeElement(startScreen);
 			
 			newGame = new Game();
+			newGame.addEventListener("gameOver", onGameOver);
 			
-			var gameView:GameView = new GameView();
+			
+			gameView = new GameView();
 			gameView.game = newGame;
 			addElement(gameView);
 		}
+		
+		private function onGameOver(e:Event) : void
+		{
+			newGame.removeEventListener("gameOver", onGameOver);
+			removeElement(gameView);
+			
+			showStartScreen();
+		}
+		
 	}
 }

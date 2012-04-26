@@ -1,8 +1,8 @@
 Todo
-1) Remove highlight after movement
-2) Acknowledge end of game
-3) Startup screen
-4) Ability to start a new game
+
+ Acknowledge end of game
+ Ability to start a new game
+ Take some of the logic out of the ViewBases and add to more specific classes made solely to deal with that
 
 Extras
 a) Add animation instead of just making the playing piece invisible

@@ -21,6 +21,8 @@ package hatstand.models
 			if(direction == DraughtsPiece.DIRECTION_UP) _playingPieces = generatePieces(direction, 5);
 			if(direction == DraughtsPiece.DIRECTION_DOWN) _playingPieces = generatePieces(direction, 0);
 			if(!_playingPieces) throw new Error("Error in creating playing pieces");
+			
+			activePieces.addEventListener(CollectionEvent.COLLECTION_CHANGE, onPlayingPiecesUpdated);
 		}
 		
 		public function get playingPieces() : ArrayCollection { return _playingPieces; }
@@ -50,6 +52,12 @@ package hatstand.models
 				}
 			}
 			return pieces;
+		}
+		
+		private function onPlayingPiecesUpdated(e:CollectionEvent) : void
+		{
+			trace("Number of pieces: " + activePieces.length);
+			if(activePieces.length == 0) dispatchEvent(new Event("allPiecesCaptured"));
 		}
 	}
 }
