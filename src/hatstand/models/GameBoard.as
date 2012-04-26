@@ -12,26 +12,28 @@ package hatstand.models
 	public class GameBoard extends EventDispatcher
 	{
 		private var _tiles:ArrayCollection;
-		private var _selectedPlayingPiece:DraughtsPiece;
+		private var _selectedDraughtsPiece:DraughtsPiece;
 		private var _selectedTile:Tile;
+		private var _boardSize:int;
 		
 		private var validTiles:ArrayCollection = new ArrayCollection();
 		
 		public function GameBoard(boardSize:int)
 		{
-			_tiles = createTiles(boardSize);
+			_boardSize = boardSize;
+			_tiles = createTiles();
 		}
 		
 		public function get tiles() : ArrayCollection { return _tiles; }
 		[Bindable]
 		public function set tiles(value:ArrayCollection) : void { _tiles = value; }
 		
-		private function createTiles(boardSize:int) : ArrayCollection
+		private function createTiles() : ArrayCollection
 		{
 			var newTiles:ArrayCollection = new ArrayCollection();
-			for (var y:int = 0; y < boardSize; y++)
+			for (var y:int = 0; y < _boardSize; y++)
 			{
-				for (var x:int = 0; x < boardSize; x++)
+				for (var x:int = 0; x < _boardSize; x++)
 				{
 					var tile:Tile = new Tile(x, y);
 					newTiles.addItem(tile);
@@ -40,14 +42,15 @@ package hatstand.models
 			return newTiles;
 		}
 		
+		//Selected playing piece: by clicking on a playing piece
 		[Bindable]
-		public function get selectedPlayingPiece() : DraughtsPiece { return _selectedPlayingPiece; }
-		public function set selectedPlayingPiece(value:DraughtsPiece) : void 
+		public function get selectedDraughtsPiece() : DraughtsPiece { return _selectedDraughtsPiece; }
+		public function set selectedDraughtsPiece(value:DraughtsPiece) : void 
 		{ 
-			_selectedPlayingPiece = value;
+			_selectedDraughtsPiece = value;
 			
 			validTiles.removeAll();
-			var possibleMoves:ArrayCollection = Rules.getInstance().validateMoves(_selectedPlayingPiece);
+			var possibleMoves:ArrayCollection = Rules.getInstance().validateMoves(_selectedDraughtsPiece);
 			
 			for each(var tile:Tile in tiles)
 			{
@@ -58,19 +61,23 @@ package hatstand.models
 			}
 		}
 
+		//Selected tile: by clicking on a tile. 
 		public function get selectedTile() : Tile { return _selectedTile; }
 		public function set selectedTile(value:Tile) : void
 		{
 			_selectedTile = value;
-			if(selectedTile && selectedPlayingPiece && validTiles.contains(_selectedTile))
+			if(selectedTile && selectedDraughtsPiece && validTiles.contains(_selectedTile))
 			{
 				
-				if((selectedTile.x - selectedPlayingPiece.x) % 2 == 0)
+				if((selectedTile.x - selectedDraughtsPiece.x) % 2 == 0)
 				{
-					Rules.getInstance().removeJumpedPiece(selectedTile, selectedPlayingPiece);
+					Rules.getInstance().removeJumpedPiece(selectedTile, selectedDraughtsPiece);
 				}
 				
-				selectedPlayingPiece.coordinate = [selectedTile.x, selectedTile.y];
+				selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
+				
+				//Check if we've hit the top or bottom of the board
+				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _boardSize) selectedDraughtsPiece.isKing;
 				
 				validTiles.removeAll();
 				
