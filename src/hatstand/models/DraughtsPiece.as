@@ -18,7 +18,7 @@ package hatstand.models
 		private var _coords:Array;
 		private var _owner:Player;
 		private var _isActive:Boolean = true;
-		private var _isKing:Boolean = true; 
+		private var _isKing:Boolean = false; 
 		
 		public function DraughtsPiece(direction:int, startingCoords:Array, owner:Player)
 		{
@@ -79,6 +79,7 @@ package hatstand.models
 		public function set isKing(value:Boolean) : void
 		{
 			_isKing = value;
+			if(isKing) direction = DIRECTION_ALL;
 		}
 		
 		public function get isActive() : Boolean

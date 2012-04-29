@@ -37,7 +37,7 @@ package hatstand.views
 				
 				//This isn't the place for this event to be dealt with
 				playingPiece.addEventListener(MouseEvent.CLICK, function (e:MouseEvent) : void {
-					if(game.activePlayer == playingPiece.draughtsPiece.owner) gameBoardView.gameBoard.selectedPlayingPiece = PlayingPiece(e.target).draughtsPiece;
+					if(game.activePlayer == playingPiece.draughtsPiece.owner) gameBoardView.gameBoard.selectedDraughtsPiece = PlayingPiece(e.target).draughtsPiece;
 				});
 				
 				playingPiecesContainer.addElement(playingPiece);

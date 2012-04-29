@@ -13,7 +13,7 @@ package hatstand
 		[Bindable] public var newGame:Game;
 		
 		private var startScreen:StartScreenView;
-		private var gameView:GameView;
+		public var gameView:GameView;
 		
 		public function HatstandBase()
 		{

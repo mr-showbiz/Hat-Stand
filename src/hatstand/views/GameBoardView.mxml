@@ -28,4 +28,13 @@
 		</s:layout>
 	</s:List>
 		
+	<s:Group x="-100" y="60" width="200" height="200" includeInLayout="false">
+		<s:HGroup>
+			<s:Label text="{ gameBoard.selectedDraughtsPiece.x }, "/>
+			<s:Label text="{ gameBoard.selectedDraughtsPiece.y }"/>	
+		</s:HGroup>
+		
+	</s:Group>
+	
+	
 </views:GameboardViewBase>

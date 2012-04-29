@@ -54,9 +54,14 @@ package hatstand.models
 			
 			for each(var tile:Tile in tiles)
 			{
+				tile.showHighlight = false;
 				for each(var coord:Array in possibleMoves)
 				{
-					if(coord[0] == tile.x && coord[1] == tile.y) validTiles.addItem(tile);
+					if(coord[0] == tile.x && coord[1] == tile.y)
+					{
+						tile.showHighlight = true;
+						validTiles.addItem(tile);
+					}
 				}
 			}
 		}
@@ -72,12 +77,15 @@ package hatstand.models
 				if((selectedTile.x - selectedDraughtsPiece.x) % 2 == 0)
 				{
 					Rules.getInstance().removeJumpedPiece(selectedTile, selectedDraughtsPiece);
+					//We've just jumped.
+					//We need to check if we can jump again
+					Rules.getInstance().canJumpAgain();
 				}
 				
 				selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
 				
 				//Check if we've hit the top or bottom of the board
-				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _boardSize) selectedDraughtsPiece.isKing;
+				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _boardSize-1) selectedDraughtsPiece.isKing = true;
 				
 				validTiles.removeAll();
 				

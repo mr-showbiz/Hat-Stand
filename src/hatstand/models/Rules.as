@@ -30,25 +30,34 @@ package hatstand.models
 		}
 		
 		//Only go diagnal 1 space
+		//TODO: Tidy this nasty collection of ifs
 		private function rule1() : ArrayCollection
 		{
 			var validCoords:ArrayCollection = new ArrayCollection();
 			
-			var newY:int;
+			var xs:Array = [selectedPlayingPiece.x - 1, selectedPlayingPiece.x + 1];
+			var ys:Array = [];
 			if(selectedPlayingPiece.direction == DraughtsPiece.DIRECTION_UP)
 			{
-				newY = selectedPlayingPiece.y - 1;
+				ys.push(selectedPlayingPiece.y - 1);
 			}
-			else
+			else if(selectedPlayingPiece.direction == DraughtsPiece.DIRECTION_DOWN)
 			{
-				newY = selectedPlayingPiece.y + 1;
+				ys.push(selectedPlayingPiece.y + 1);
+			}
+			else if(selectedPlayingPiece.direction == DraughtsPiece.DIRECTION_ALL)
+			{
+				ys.push(selectedPlayingPiece.y + 1);
+				ys.push(selectedPlayingPiece.y - 1);
 			}
 			
-			var newX:int = selectedPlayingPiece.x - 1;
-			validCoords.addItem([newX, newY]);
-			
-			var newX2:int = selectedPlayingPiece.x + 1;
-			validCoords.addItem([newX2, newY]);
+			for each(var y:int in ys)
+			{
+				for each(var x:int in xs)
+				{
+					validCoords.addItem([x, y]);	
+				}
+			}
 			
 			return rule2(validCoords); 
 		}
@@ -73,7 +82,6 @@ package hatstand.models
 		
 		/* Checks the space diagonal over from the invalid coord to see if it's free.
 		   If it is, then we can potentially jump over the invalid coord's playing piece
-		   TODO: only make it pay attention to other players pieces
 		*/
 		private function rules3(invalidCoords:ArrayCollection) : ArrayCollection
 		{
@@ -82,18 +90,22 @@ package hatstand.models
 			//Iterate through all invalid coords
 			for each(var coord:Array in invalidCoords)
 			{
-				/* If the invalid coordinates x value minus our selected pieces x value is greater than 0 then we must
-				   Plus 1 to the invalid coordinates x value to carry the diagonal through to the otherside.
-				*/
-				var xVariant:int = coord[0] - selectedPlayingPiece.x > 0 ? 1 : -1;
-				/*TODO: Make it pay attention to KINDED pieces!!!
-				  If our selected piece is heading up the board, we need to minus 1 from our invalid coordinate to 
-				  carry the diagonal through
-				*/
-				var yVariant:int = selectedPlayingPiece.direction == DraughtsPiece.DIRECTION_UP ? -1: 1;
-				// hoppedCoord is the coord of the tile diagonally through the playing piece we are trying to hop over.
-				var hoppedCoord:Array = [coord[0] + xVariant, coord[1] + yVariant];
-				if(!isCoordinateOccupied(hoppedCoord, allActivePieces)) availableJumpedCoords.addItem(hoppedCoord); 
+				//Check if we are attempting to jump over our own pieces
+				if(!isCoordinateOccupied(coord, selectedPlayingPiece.owner.activePieces))
+				{
+					/* If the invalid coordinates x value minus our selected pieces x value is greater than 0 then we must
+					plus 1 to the invalid coordinates x value to carry the diagonal through to the otherside.
+					*/
+					var xDelta:int = coord[0] - selectedPlayingPiece.x;
+					/*TODO: Make it pay attention to KINGED pieces!!!
+					If our selected piece is heading up the board, we need to minus 1 from our invalid coordinate to 
+					carry the diagonal through
+					*/
+					var yDelta:int = coord[1] - selectedPlayingPiece.y;
+					// hoppedCoord is the coord of the tile diagonally through the playing piece we are trying to hop over.
+					var hoppedCoord:Array = [coord[0] + xDelta, coord[1] + yDelta];
+					if(!isCoordinateOccupied(hoppedCoord, allActivePieces)) availableJumpedCoords.addItem(hoppedCoord);	
+				}
 			}
 			
 			return availableJumpedCoords;
@@ -135,6 +147,11 @@ package hatstand.models
 					break;
 				}
 			}
+		}
+		
+		public function canJumpAgain() : void
+		{
+			
 		}
 		
 	}
