@@ -77,13 +77,13 @@ package hatstand.models
 				coordinateList.removeItemAt(coordinateList.getItemIndex(inValidCoordinate));
 			}
 			
-			return new ArrayCollection(coordinateList.source.concat(rules3(inValidCoords).source));
+			return rule3(inValidCoords).length > 0 ? rule3(inValidCoords) : coordinateList;
 		}
 		
 		/* Checks the space diagonal over from the invalid coord to see if it's free.
 		   If it is, then we can potentially jump over the invalid coord's playing piece
 		*/
-		private function rules3(invalidCoords:ArrayCollection) : ArrayCollection
+		private function rule3(invalidCoords:ArrayCollection) : ArrayCollection
 		{
 			var availableJumpedCoords:ArrayCollection = new ArrayCollection();
 
@@ -97,12 +97,15 @@ package hatstand.models
 					plus 1 to the invalid coordinates x value to carry the diagonal through to the otherside.
 					*/
 					var xDelta:int = coord[0] - selectedPlayingPiece.x;
-					/*TODO: Make it pay attention to KINGED pieces!!!
-					If our selected piece is heading up the board, we need to minus 1 from our invalid coordinate to 
-					carry the diagonal through
-					*/
+					/* If our selected piece is heading up the board, we need to minus 1 from our invalid coordinate to 
+					carry the diagonal through */
 					var yDelta:int = coord[1] - selectedPlayingPiece.y;
 					// hoppedCoord is the coord of the tile diagonally through the playing piece we are trying to hop over.
+					
+					var newX:int = coord[0] + xDelta;
+					var newY:int = coord[1] + yDelta;
+					if(newX < 0 || newX > game.gameBoard.size - 1 || newY < 0 || newY > game.gameBoard.size -1) break;
+					
 					var hoppedCoord:Array = [coord[0] + xDelta, coord[1] + yDelta];
 					if(!isCoordinateOccupied(hoppedCoord, allActivePieces)) availableJumpedCoords.addItem(hoppedCoord);	
 				}

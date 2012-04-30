@@ -14,15 +14,17 @@ package hatstand.models
 		private var _tiles:ArrayCollection;
 		private var _selectedDraughtsPiece:DraughtsPiece;
 		private var _selectedTile:Tile;
-		private var _boardSize:int;
+		private var _size:int;
 		
 		private var validTiles:ArrayCollection = new ArrayCollection();
 		
 		public function GameBoard(boardSize:int)
 		{
-			_boardSize = boardSize;
+			_size = boardSize;
 			_tiles = createTiles();
 		}
+		
+		public function get size() : int { return _size; }
 		
 		public function get tiles() : ArrayCollection { return _tiles; }
 		[Bindable]
@@ -31,9 +33,9 @@ package hatstand.models
 		private function createTiles() : ArrayCollection
 		{
 			var newTiles:ArrayCollection = new ArrayCollection();
-			for (var y:int = 0; y < _boardSize; y++)
+			for (var y:int = 0; y < _size; y++)
 			{
-				for (var x:int = 0; x < _boardSize; x++)
+				for (var x:int = 0; x < _size; x++)
 				{
 					var tile:Tile = new Tile(x, y);
 					newTiles.addItem(tile);
@@ -85,7 +87,7 @@ package hatstand.models
 				selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
 				
 				//Check if we've hit the top or bottom of the board
-				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _boardSize-1) selectedDraughtsPiece.isKing = true;
+				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1) selectedDraughtsPiece.isKing = true;
 				
 				validTiles.removeAll();
 				

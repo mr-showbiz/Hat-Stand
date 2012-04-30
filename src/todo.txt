@@ -1,7 +1,6 @@
 Todo
 
- Acknowledge end of game
- Ability to start a new game
+ When it's your turn, check all pieces for any forced jumps
  Take some of the logic out of the ViewBases and add to more specific classes made solely to deal with that
 
 Extras
