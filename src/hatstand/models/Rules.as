@@ -80,9 +80,9 @@ package hatstand.models
 			return rule3(inValidCoords).length > 0 ? rule3(inValidCoords) : coordinateList;
 		}
 		
-		/* Checks the space diagonal over from the invalid coord to see if it's free.
+		/** Checks the space diagonally over from the invalid coord to see if it's free.
 		   If it is, then we can potentially jump over the invalid coord's playing piece
-		*/
+		**/
 		private function rule3(invalidCoords:ArrayCollection) : ArrayCollection
 		{
 			var availableJumpedCoords:ArrayCollection = new ArrayCollection();
@@ -152,10 +152,23 @@ package hatstand.models
 			}
 		}
 		
-		public function canJumpAgain() : void
+		public function canJumpAgain() : ArrayCollection
 		{
+			var chainedCoordinates:ArrayCollection = new ArrayCollection();
+			for each(var coord:Array in rule1())
+			{
+				if(isJumpedCoordinate(coord))
+				{
+					chainedCoordinates.addItem(coord);
+				}
+			}
 			
+			return chainedCoordinates;
 		}
 		
+		private function isJumpedCoordinate(coordinate:Array) : Boolean
+		{
+			return (selectedPlayingPiece.x - coordinate[0])%2 == 0;
+		}
 	}
 }

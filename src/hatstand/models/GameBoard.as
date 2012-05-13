@@ -54,10 +54,54 @@ package hatstand.models
 			validTiles.removeAll();
 			var possibleMoves:ArrayCollection = Rules.getInstance().validateMoves(_selectedDraughtsPiece);
 			
+			highlightTiles(possibleMoves);
+			
+		}
+
+		//Selected tile: by clicking on a tile.
+		
+		//TODO: Tile movement code in there twice.
+		//	too many ifs
+		public function get selectedTile() : Tile { return _selectedTile; }
+		public function set selectedTile(value:Tile) : void
+		{
+			_selectedTile = value;
+			if(selectedTile && selectedDraughtsPiece && validTiles.contains(_selectedTile))
+			{
+				var forceJump:Boolean = false;
+				if((selectedTile.x - selectedDraughtsPiece.x) % 2 == 0)
+				{
+					Rules.getInstance().removeJumpedPiece(selectedTile, selectedDraughtsPiece);
+
+					selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
+					
+					//We've just jumped.
+					//We need to check if we can jump again
+					var chainedCoordinates:ArrayCollection = Rules.getInstance().canJumpAgain(); 
+					if(chainedCoordinates.length > 0)
+					{
+						forceJump = true;	
+						highlightTiles(chainedCoordinates);
+					}
+				}
+
+				if(!forceJump) selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
+				
+				//Check if we've hit the top or bottom of the board
+				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1) selectedDraughtsPiece.isKing = true;
+				
+				if(!forceJump) validTiles.removeAll();
+				
+				if(!forceJump) endOfTurnCleanUp();	
+			}
+		}
+		
+		private function highlightTiles(tileCoordinates:ArrayCollection) : void
+		{
 			for each(var tile:Tile in tiles)
 			{
 				tile.showHighlight = false;
-				for each(var coord:Array in possibleMoves)
+				for each(var coord:Array in tileCoordinates)
 				{
 					if(coord[0] == tile.x && coord[1] == tile.y)
 					{
@@ -65,33 +109,6 @@ package hatstand.models
 						validTiles.addItem(tile);
 					}
 				}
-			}
-		}
-
-		//Selected tile: by clicking on a tile. 
-		public function get selectedTile() : Tile { return _selectedTile; }
-		public function set selectedTile(value:Tile) : void
-		{
-			_selectedTile = value;
-			if(selectedTile && selectedDraughtsPiece && validTiles.contains(_selectedTile))
-			{
-				
-				if((selectedTile.x - selectedDraughtsPiece.x) % 2 == 0)
-				{
-					Rules.getInstance().removeJumpedPiece(selectedTile, selectedDraughtsPiece);
-					//We've just jumped.
-					//We need to check if we can jump again
-					Rules.getInstance().canJumpAgain();
-				}
-				
-				selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
-				
-				//Check if we've hit the top or bottom of the board
-				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1) selectedDraughtsPiece.isKing = true;
-				
-				validTiles.removeAll();
-				
-				endOfTurnCleanUp();
 			}
 		}
 		

@@ -1,6 +1,6 @@
 Todo
 
- When it's your turn, check all pieces for any forced jumps
+ At the start and after a piece has been moved, check all pieces for any forced jumps 
  Take some of the logic out of the ViewBases and add to more specific classes made solely to deal with that
 
 Extras
