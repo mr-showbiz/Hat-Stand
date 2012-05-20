@@ -4,6 +4,8 @@ package hatstand.models
 	import flash.events.EventDispatcher;
 	import flash.filters.DisplacementMapFilter;
 
+	//Perhaps turn into singleton
+	
 	public class Game extends EventDispatcher
 	{
 		private var _player1:Player;
@@ -21,7 +23,7 @@ package hatstand.models
 			_player2.addEventListener("allPiecesCaptured", onAllPiecesCaptured);
 			
 			//TODO: Hardcoded game board size. Bad
-			_gameBoard = new GameBoard(8);
+			_gameBoard = new GameBoard(8, this);
 			
 			_gameBoard.addEventListener("endOfTurn", onEndOfTurn);
 			
@@ -41,6 +43,8 @@ package hatstand.models
 		private function onEndOfTurn(e:Event) : void
 		{
 			activePlayer = activePlayer == _player1 ? _player2 : _player1;
+			
+			dispatchEvent(new Event("newTurn"));
 		}
 		
 		private function onAllPiecesCaptured(e:Event) : void

@@ -152,8 +152,9 @@ package hatstand.models
 			}
 		}
 		
-		public function canJumpAgain() : ArrayCollection
+		public function canCapturePiece(draughtsPiece:DraughtsPiece = null) : ArrayCollection
 		{
+			if(draughtsPiece) selectedPlayingPiece = draughtsPiece;
 			var chainedCoordinates:ArrayCollection = new ArrayCollection();
 			for each(var coord:Array in rule1())
 			{

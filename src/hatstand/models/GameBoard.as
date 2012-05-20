@@ -4,6 +4,7 @@ package hatstand.models
 	import flash.events.EventDispatcher;
 	
 	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayList;
 
 	/**
 	 * Keeps track of the tiles 
@@ -15,20 +16,37 @@ package hatstand.models
 		private var _selectedDraughtsPiece:DraughtsPiece;
 		private var _selectedTile:Tile;
 		private var _size:int;
+		private var _game:Game;
+		
+		private var lockedDraughtsPieces:ArrayCollection;
 		
 		private var validTiles:ArrayCollection = new ArrayCollection();
 		
-		public function GameBoard(boardSize:int)
+		public function GameBoard(boardSize:int, game:Game)
 		{
 			_size = boardSize;
 			_tiles = createTiles();
+			_game = game;
+			
+			lockedDraughtsPieces = new ArrayCollection();
+			game.addEventListener("newTurn", onNewTurn);
 		}
+		
+		private function get game() : Game { return _game; }
 		
 		public function get size() : int { return _size; }
 		
 		public function get tiles() : ArrayCollection { return _tiles; }
 		[Bindable]
 		public function set tiles(value:ArrayCollection) : void { _tiles = value; }
+		
+		private function onNewTurn(e:Event) : void
+		{
+			for each(var draughtsPiece:DraughtsPiece in game.activePlayer.activePieces)
+			{
+				if(Rules.getInstance().canCapturePiece(draughtsPiece).length) lockedDraughtsPieces.addItem(draughtsPiece); 
+			}
+		}
 		
 		private function createTiles() : ArrayCollection
 		{
@@ -49,12 +67,20 @@ package hatstand.models
 		public function get selectedDraughtsPiece() : DraughtsPiece { return _selectedDraughtsPiece; }
 		public function set selectedDraughtsPiece(value:DraughtsPiece) : void 
 		{ 
-			_selectedDraughtsPiece = value;
-			
-			validTiles.removeAll();
-			var possibleMoves:ArrayCollection = Rules.getInstance().validateMoves(_selectedDraughtsPiece);
-			
-			highlightTiles(possibleMoves);
+			if(lockedDraughtsPieces.length > 0 && !lockedDraughtsPieces.contains(value))
+			{
+				trace("Piece NOT valid.");
+			}
+			else
+			{
+				_selectedDraughtsPiece = value;
+				
+				validTiles.removeAll();
+				
+				var possibleMoves:ArrayCollection = Rules.getInstance().validateMoves(_selectedDraughtsPiece);
+				
+				highlightTiles(possibleMoves);
+			}
 			
 		}
 
@@ -77,7 +103,7 @@ package hatstand.models
 					
 					//We've just jumped.
 					//We need to check if we can jump again
-					var chainedCoordinates:ArrayCollection = Rules.getInstance().canJumpAgain(); 
+					var chainedCoordinates:ArrayCollection = Rules.getInstance().canCapturePiece(); 
 					if(chainedCoordinates.length > 0)
 					{
 						forceJump = true;	
@@ -114,6 +140,8 @@ package hatstand.models
 		
 		private function endOfTurnCleanUp() : void
 		{
+			lockedDraughtsPieces.removeAll();
+			
 			dispatchEvent(new Event("endOfTurn"));
 		}
 		
