@@ -2,6 +2,7 @@ Todo
 
  Can only king a piece, if there are available pieces
  Take some of the logic out of the ViewBases and add to more specific classes made solely to deal with that
+ Add the start of a turn, check if there are any pieces waiting to be kinged
 
 Extras
 a) Add animation instead of just making the playing piece invisible

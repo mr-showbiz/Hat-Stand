@@ -114,8 +114,19 @@ package hatstand.models
 				if(!forceJump) selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
 				
 				//Check if we've hit the top or bottom of the board
-				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1) selectedDraughtsPiece.isKing = true;
-				
+				//Check if we have enough pieces to make a king
+				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1)
+				{
+					var numberOfTakenPiece:int = selectedDraughtsPiece.owner.playingPieces.length - selectedDraughtsPiece.owner.activePieces.length;
+					var numberOfKings:int = 0;
+					for each(var draughtsPiece:DraughtsPiece in selectedDraughtsPiece.owner.activePieces)
+					{
+						if(draughtsPiece.isKing) numberOfKings++;
+					}
+					
+					if(numberOfKings < numberOfTakenPiece) selectedDraughtsPiece.makeKing();
+				}
+					
 				if(!forceJump) validTiles.removeAll();
 				
 				if(!forceJump) endOfTurnCleanUp();	

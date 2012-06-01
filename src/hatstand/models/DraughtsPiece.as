@@ -76,12 +76,6 @@ package hatstand.models
 			return _isKing;
 		}
 			
-		public function set isKing(value:Boolean) : void
-		{
-			_isKing = value;
-			if(isKing) direction = DIRECTION_ALL;
-		}
-		
 		public function get isActive() : Boolean
 		{
 			return _isActive;
@@ -91,6 +85,12 @@ package hatstand.models
 		{
 			_isActive = value;
 			if(!isActive) dispatchEvent(new Event("draughtsPieceCaptured", true));
+		}
+		
+		public function makeKing() : void
+		{
+			_isKing = true;
+			direction = DIRECTION_ALL;
 		}
 		
 	}
