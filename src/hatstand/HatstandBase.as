@@ -10,7 +10,7 @@ package hatstand
 	
 	public class HatstandBase extends Application
 	{
-		[Bindable] public var newGame:Game;
+		private var newGame:Game;
 		
 		private var startScreen:StartScreenView;
 		public var gameView:GameView;

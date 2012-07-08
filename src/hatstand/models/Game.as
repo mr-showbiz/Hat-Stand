@@ -22,7 +22,7 @@ package hatstand.models
 			_player1.addEventListener("allPiecesCaptured", onAllPiecesCaptured);
 			_player2.addEventListener("allPiecesCaptured", onAllPiecesCaptured);
 			
-			//TODO: Hardcoded game board size. Bad
+			//TODO: Hardcoded game board size.
 			_gameBoard = new GameBoard(8, this);
 			
 			_gameBoard.addEventListener("endOfTurn", onEndOfTurn);
@@ -31,7 +31,6 @@ package hatstand.models
 			Rules.getInstance().game = this;
 			
 			activePlayer = _player1;
-			
 		}
 		
 		public function get player1() : Player { return _player1; }

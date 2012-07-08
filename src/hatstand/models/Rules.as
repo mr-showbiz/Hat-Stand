@@ -5,9 +5,11 @@ package hatstand.models
 	/**
 	 * DOES THIS REALLY NEED TO BE A SINGLTON??!
 	 * 
-	 * 
 	 * Minimax decision theory
 	 * 
+	 * TODO:
+	 * 1) perhaps change references to coordinates to actual tiles instead, so methods return tiles not coords
+	 * 2) removeJumpedPiece: Is it the job of Rules to remove the pieces
 	 **/
 	
 	public class Rules
@@ -30,7 +32,7 @@ package hatstand.models
 		}
 		
 		//Only go diagnal 1 space
-		//TODO: Tidy this nasty collection of ifs
+		//TODO: Tidy this nasty collection of ifs (change DIRECTION stuff, I don't like it)
 		private function rule1() : ArrayCollection
 		{
 			var validCoords:ArrayCollection = new ArrayCollection();
@@ -152,6 +154,7 @@ package hatstand.models
 			}
 		}
 		
+		// TODO: method name doesn't make sense with its return value
 		public function canCapturePiece(draughtsPiece:DraughtsPiece = null) : ArrayCollection
 		{
 			if(draughtsPiece) selectedPlayingPiece = draughtsPiece;

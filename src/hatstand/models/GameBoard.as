@@ -4,10 +4,17 @@ package hatstand.models
 	import flash.events.EventDispatcher;
 	
 	import mx.collections.ArrayCollection;
-	import mx.collections.ArrayList;
 
 	/**
-	 * Keeps track of the tiles 
+	 * Keeps track of the tiles
+	 * 
+	 * 1) onNewTurn: makes list of locked draughts pieces 
+	 * 2) createTiles: creates tiles based on boardsize
+	 * 3) Stores the selectedDraughtsPiece: SETTER if there are locked draugts pieces it shows the highlights
+	 * 4) Stores the selectedTile: SETTER very bloated does TOO MUCH
+	 * 5) highlightTiles: iterate through all Tiles, match with passed arraycollection
+	 * 6) endOFTurnCleanup: 
+	 *  
 	 */
 	
 	public class GameBoard extends EventDispatcher

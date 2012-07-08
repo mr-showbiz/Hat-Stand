@@ -6,6 +6,8 @@ package hatstand.models
 	import mx.collections.ArrayCollection;
 	import mx.events.CollectionEvent;
 
+	//TODO: Revalute DIRECTION stuff, dont like it
+	
 	public class Player extends EventDispatcher
 	{
 		private var _playingPieces:ArrayCollection;
