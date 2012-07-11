@@ -2,7 +2,8 @@ package hatstand.models
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.filters.DisplacementMapFilter;
+	
+	import mx.collections.ArrayCollection;
 
 	//Perhaps turn into singleton
 	
@@ -31,6 +32,11 @@ package hatstand.models
 			Rules.getInstance().game = this;
 			
 			activePlayer = _player1;
+		}
+		
+		public function get allDraughtsPieces() : ArrayCollection
+		{
+			return new ArrayCollection(player1.playingPieces.source.concat(player2.playingPieces.source));
 		}
 		
 		public function get player1() : Player { return _player1; }

@@ -1,39 +1,44 @@
 package hatstand.views
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import hatstand.models.DraughtsPiece;
 	import hatstand.models.Game;
 	
-	import mx.collections.ArrayCollection;
 	import mx.events.FlexEvent;
 	
 	import spark.components.Group;
 	
 	public class GameViewBase extends Group
 	{
-		[Bindable] public var game:Game;
+		[Bindable] protected var game:Game;
 		public var playingPiecesContainer:Group;
 		public var gameBoardView:GameBoardView;
 		
 		public function GameViewBase()
 		{
+			game = new Game();
+			game.addEventListener("gameOver", onGameOver);
+			
 			addEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
 		}	
 	
 		private function onCreationComplete(e:FlexEvent) : void
 		{
-			positionPieces(game.player1.activePieces, 0x333333);
-			positionPieces(game.player2.activePieces, 0xeeeeee);
+			removeEventListener(FlexEvent.CREATION_COMPLETE, onCreationComplete);
+			positionPieces();
 		}	
 		
-		private function positionPieces(pieces:ArrayCollection, color:uint) : void
+		//TODO: think of better way to assign colours to playingPiece
+		private function positionPieces() : void
 		{
-			for each(var piece:DraughtsPiece in pieces)
+			for each(var piece:DraughtsPiece in game.allDraughtsPieces)
 			{
 				var playingPiece:PlayingPiece = new PlayingPiece();
 				playingPiece.draughtsPiece = piece;
-				playingPiece.playingPieceColor = color;
+				
+				playingPiece.playingPieceColor = piece.owner == game.player1 ? 0xDDDDDD : 0x333333;
 				
 				//This isn't the place for this event to be dealt with
 				playingPiece.addEventListener(MouseEvent.CLICK, function (e:MouseEvent) : void {
@@ -42,6 +47,12 @@ package hatstand.views
 				
 				playingPiecesContainer.addElement(playingPiece);
 			}
+		}
+		
+		private function onGameOver(e:Event) : void
+		{
+			dispatchEvent(e);
+			game.removeEventListener("gameOver", onGameOver);
 		}
 		
 	}

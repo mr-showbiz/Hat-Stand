@@ -20,6 +20,7 @@ package hatstand.models
 			var playerColour:String = direction == DraughtsPiece.DIRECTION_UP ? "Black" : "White";
 			name = "Player (" + playerColour + ")"; 
 			
+			//Refactor this initiation of generating pieces
 			if(direction == DraughtsPiece.DIRECTION_UP) _playingPieces = generatePieces(direction, 5);
 			if(direction == DraughtsPiece.DIRECTION_DOWN) _playingPieces = generatePieces(direction, 0);
 			if(!_playingPieces) throw new Error("Error in creating playing pieces");

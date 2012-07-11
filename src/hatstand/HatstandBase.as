@@ -2,7 +2,6 @@ package hatstand
 {
 	import flash.events.Event;
 	
-	import hatstand.models.Game;
 	import hatstand.views.GameView;
 	import hatstand.views.StartScreenView;
 	
@@ -10,8 +9,6 @@ package hatstand
 	
 	public class HatstandBase extends Application
 	{
-		private var newGame:Game;
-		
 		private var startScreen:StartScreenView;
 		public var gameView:GameView;
 		
@@ -32,18 +29,15 @@ package hatstand
 			startScreen.removeEventListener("startGame", onStartGame);
 			removeElement(startScreen);
 			
-			newGame = new Game();
-			newGame.addEventListener("gameOver", onGameOver);
-			
-			
 			gameView = new GameView();
-			gameView.game = newGame;
+			gameView.addEventListener("gameOver", onGameOver);
+			
 			addElement(gameView);
 		}
 		
 		private function onGameOver(e:Event) : void
 		{
-			newGame.removeEventListener("gameOver", onGameOver);
+			gameView.removeEventListener("gameOver", onGameOver);
 			removeElement(gameView);
 			
 			showStartScreen();

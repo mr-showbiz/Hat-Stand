@@ -22,9 +22,11 @@
 
 	<s:Image source="@Embed('../assets/board.png')"/>
 	
-	<s:List id="gameTiles" itemRenderer="hatstand.views.GameboardTileItemRendererView" dataProvider="{ gameBoard.tiles }" borderVisible="false" contentBackgroundAlpha="0" change="chosen(event)">
+	<s:List id="gameTiles" itemRenderer="hatstand.views.GameboardTileItemRendererView" dataProvider="{ gameBoard.tiles }"
+			borderVisible="false" contentBackgroundAlpha="0" change="chosen(event)">
 		<s:layout>
-			<s:TileLayout requestedColumnCount="8" requestedRowCount="8" horizontalGap="0" verticalGap="0" rowHeight="30" columnWidth="30"/>
+			<s:TileLayout requestedColumnCount="8" requestedRowCount="8" horizontalGap="0" verticalGap="0" 
+						  rowHeight="30" columnWidth="30"/>
 		</s:layout>
 	</s:List>
 		
