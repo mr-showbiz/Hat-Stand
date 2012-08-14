@@ -99,11 +99,15 @@ package hatstand.models
 		public function set selectedTile(value:Tile) : void
 		{
 			_selectedTile = value;
+			
 			if(selectedTile && selectedDraughtsPiece && validTiles.contains(_selectedTile))
 			{
 				var forceJump:Boolean = false;
+				/*Logic here determines how far we've jumped (if greater than 1 tile in any direction we've jumped
+				over a playing piece)*/
 				if((selectedTile.x - selectedDraughtsPiece.x) % 2 == 0)
 				{
+					//SHOULD rules be removing the playing piece?! Surely the game board should deal with this
 					Rules.getInstance().removeJumpedPiece(selectedTile, selectedDraughtsPiece);
 
 					selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
@@ -124,22 +128,26 @@ package hatstand.models
 				//Check if we have enough pieces to make a king
 				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1)
 				{
-					var numberOfTakenPiece:int = selectedDraughtsPiece.owner.playingPieces.length - selectedDraughtsPiece.owner.activePieces.length;
+					//Should be easier to get number of captured pieces
+					var numberOfTakenPieces:int = selectedDraughtsPiece.owner.playingPieces.length - selectedDraughtsPiece.owner.activePieces.length;
 					var numberOfKings:int = 0;
 					for each(var draughtsPiece:DraughtsPiece in selectedDraughtsPiece.owner.activePieces)
 					{
 						if(draughtsPiece.isKing) numberOfKings++;
 					}
 					
-					if(numberOfKings < numberOfTakenPiece) selectedDraughtsPiece.makeKing();
+					if(numberOfKings < numberOfTakenPieces) selectedDraughtsPiece.makeKing();
 				}
 					
-				if(!forceJump) validTiles.removeAll();
-				
-				if(!forceJump) endOfTurnCleanUp();	
+				if(!forceJump) 
+				{
+					validTiles.removeAll();
+					endOfTurnCleanUp();
+				}
 			}
 		}
 		
+		//Change so this is somehow only accessible via debug options feature
 		private function highlightTiles(tileCoordinates:ArrayCollection) : void
 		{
 			for each(var tile:Tile in tiles)

@@ -22,7 +22,8 @@
 
 	<s:Image source="@Embed('../assets/board.png')"/>
 	
-	<s:List id="gameTiles" itemRenderer="hatstand.views.GameboardTileItemRendererView" dataProvider="{ gameBoard.tiles }"
+	<s:List id="gameTiles" itemRenderer="hatstand.views.GameboardTileItemRendererView" 
+			dataProvider="{ gameBoard.tiles }"
 			borderVisible="false" contentBackgroundAlpha="0" change="chosen(event)">
 		<s:layout>
 			<s:TileLayout requestedColumnCount="8" requestedRowCount="8" horizontalGap="0" verticalGap="0" 
@@ -37,6 +38,5 @@
 		</s:HGroup>
 		
 	</s:Group>
-	
 	
 </views:GameboardViewBase>

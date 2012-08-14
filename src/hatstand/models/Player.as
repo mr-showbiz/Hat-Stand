@@ -30,6 +30,7 @@ package hatstand.models
 		
 		public function get playingPieces() : ArrayCollection { return _playingPieces; }
 		
+		//Wasteful, making a new array collection every time we get activePieces
 		public function get activePieces() : ArrayCollection
 		{
 			var pieces:ArrayCollection = new ArrayCollection();
