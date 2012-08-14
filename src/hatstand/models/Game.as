@@ -17,8 +17,8 @@ package hatstand.models
 		
 		public function Game()
 		{
-			_player1 = new Player(DraughtsPiece.DIRECTION_UP);
-			_player2 = new Player(DraughtsPiece.DIRECTION_DOWN);
+			_player1 = new Player(DraughtsPiece.DIRECTION_DOWN);
+			_player2 = new Player(DraughtsPiece.DIRECTION_UP);
 			
 			_player1.addEventListener("allPiecesCaptured", onAllPiecesCaptured);
 			_player2.addEventListener("allPiecesCaptured", onAllPiecesCaptured);

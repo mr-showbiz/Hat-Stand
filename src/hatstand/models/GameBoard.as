@@ -17,6 +17,9 @@ package hatstand.models
 	 *  
 	 */
 	
+	
+	//Method that deals with moving the playing piece but returns a Playing piece if a piece was jumped
+	
 	public class GameBoard extends EventDispatcher
 	{
 		private var _tiles:ArrayCollection;
@@ -102,49 +105,76 @@ package hatstand.models
 			
 			if(selectedTile && selectedDraughtsPiece && validTiles.contains(_selectedTile))
 			{
-				var forceJump:Boolean = false;
-				/*Logic here determines how far we've jumped (if greater than 1 tile in any direction we've jumped
-				over a playing piece)*/
-				if((selectedTile.x - selectedDraughtsPiece.x) % 2 == 0)
+				var capturedDraughtsPiece:DraughtsPiece = moveDraughtsPiece();
+				
+				if(capturedDraughtsPiece)
 				{
-					//SHOULD rules be removing the playing piece?! Surely the game board should deal with this
-					Rules.getInstance().removeJumpedPiece(selectedTile, selectedDraughtsPiece);
+					capturedDraughtsPiece.isActive = false;
 
-					selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
-					
-					//We've just jumped.
 					//We need to check if we can jump again
 					var chainedCoordinates:ArrayCollection = Rules.getInstance().canCapturePiece(); 
 					if(chainedCoordinates.length > 0)
 					{
-						forceJump = true;	
 						highlightTiles(chainedCoordinates);
+						
+						return;
 					}
 				}
 
-				if(!forceJump) selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
-				
-				//Check if we've hit the top or bottom of the board
-				//Check if we have enough pieces to make a king
-				if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1)
-				{
-					//Should be easier to get number of captured pieces
-					var numberOfTakenPieces:int = selectedDraughtsPiece.owner.playingPieces.length - selectedDraughtsPiece.owner.activePieces.length;
-					var numberOfKings:int = 0;
-					for each(var draughtsPiece:DraughtsPiece in selectedDraughtsPiece.owner.activePieces)
-					{
-						if(draughtsPiece.isKing) numberOfKings++;
-					}
+				updateKingStatus();
 					
-					if(numberOfKings < numberOfTakenPieces) selectedDraughtsPiece.makeKing();
+				endOfTurnCleanUp();
+			}
+		}
+		
+		private function updateKingStatus() : void
+		{
+			//Check if we've hit the top or bottom of the board
+			//Check if we have enough pieces to make a king
+			if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1)
+			{
+				//Should be easier to get number of captured pieces
+				var numberOfTakenPieces:int = selectedDraughtsPiece.owner.playingPieces.length - selectedDraughtsPiece.owner.activePieces.length;
+				var numberOfKings:int = 0;
+				for each(var draughtsPiece:DraughtsPiece in selectedDraughtsPiece.owner.activePieces)
+				{
+					if(draughtsPiece.isKing) numberOfKings++;
 				}
-					
-				if(!forceJump) 
+				
+				if(numberOfKings < numberOfTakenPieces) selectedDraughtsPiece.makeKing();
+			}	
+		}
+		
+		private function moveDraughtsPiece() : DraughtsPiece
+		{
+			var capturedDraughtsPiece:DraughtsPiece;
+			
+			if(isDraughtsPieceCaptured)
+			{
+				var x:int = Math.max(selectedTile.x, selectedDraughtsPiece.x) - 1;
+				var y:int = Math.max(selectedTile.y, selectedDraughtsPiece.y) - 1;
+				
+				//Once removed from active pieces, we then need to remove the actual draughts piece from the view
+				for each(var draughtsPiece:DraughtsPiece in game.activePlayer.activePieces)
 				{
-					validTiles.removeAll();
-					endOfTurnCleanUp();
+					if(draughtsPiece.x == x && draughtsPiece.y == y) 
+					{
+						capturedDraughtsPiece = draughtsPiece;
+						break;
+					}
 				}
 			}
+			
+			selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
+			
+			return capturedDraughtsPiece;
+		}
+		
+		/*Logic here determines how far we've jumped (if greater than 1 tile in any direction we've jumped
+		over a playing piece)*/
+		private function get isDraughtsPieceCaptured() : Boolean
+		{
+			return (selectedTile.x - selectedDraughtsPiece.x) % 2 == 0;
 		}
 		
 		//Change so this is somehow only accessible via debug options feature
@@ -167,6 +197,7 @@ package hatstand.models
 		private function endOfTurnCleanUp() : void
 		{
 			lockedDraughtsPieces.removeAll();
+			validTiles.removeAll();
 			
 			dispatchEvent(new Event("endOfTurn"));
 		}

@@ -136,24 +136,6 @@ package hatstand.models
 			return new ArrayCollection(game.player1.activePieces.source.concat(game.player2.activePieces.source));
 		}
 		
-		public function removeJumpedPiece(targetTile:Tile, selectedDraughtsPiece:DraughtsPiece) : void
-		{
-			var x:int = Math.max(targetTile.x, selectedDraughtsPiece.x) - 1;
-			var y:int = Math.max(targetTile.y, selectedDraughtsPiece.y) - 1;
-			
-			//Once removed from active pieces, we then need to remove the actual draughts piece from the view
-			var activePieces:ArrayCollection = game.activePlayer == game.player1 ? game.player2.activePieces : game.player1.activePieces;
-			for each(var draughtsPiece:DraughtsPiece in activePieces)
-			{
-				if(draughtsPiece.x == x && draughtsPiece.y == y) 
-				{
-					
-					draughtsPiece.isActive = false;
-					break;
-				}
-			}
-		}
-		
 		// TODO: method name doesn't make sense with its return value
 		public function canCapturePiece(draughtsPiece:DraughtsPiece = null) : ArrayCollection
 		{
