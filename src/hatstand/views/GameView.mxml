@@ -3,13 +3,28 @@
 					xmlns:s="library://ns.adobe.com/flex/spark" 
 					xmlns:views="hatstand.views.*"
 					horizontalCenter="0" verticalCenter="0">
+	<fx:Script>
+		<![CDATA[
+			import hatstand.models.FakeUtils;
+		]]>
+	</fx:Script>
 	
 	<s:HGroup horizontalCenter="0" verticalCenter="0">
-		<s:Label text="{ game.activePlayer.name }"/>
+		<s:HGroup width="255">
+			<s:Label text="{ game.activePlayer.name }"/>
+			<s:Label text="{ game.gameBoard.selectedDraughtsPiece.owner.name }"/>
+			<s:Label text="{ FakeUtils.getObjectMemoryHash(game.gameBoard.selectedDraughtsPiece.owner) }" />
+		</s:HGroup>
 		<s:Group id="gameboardContainer">
 			<views:GameBoardView id="gameBoardView" gameBoard="{ game.gameBoard }"/>
 			<s:Group id="playingPiecesContainer" />
-		</s:Group>	
+		</s:Group>
+		
+		<s:List dataProvider="{ game.allDraughtsPieces }" itemRenderer="hatstand.views.TileListItemRenderer">
+			<s:layout>
+				<s:VerticalLayout />
+			</s:layout>
+		</s:List>
 	</s:HGroup>
 	
 </views:GameViewBase>

@@ -4,21 +4,19 @@ package hatstand.models
 	import flash.events.EventDispatcher;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.INavigatorContent;
 
 	/**
 	 * Keeps track of the tiles
 	 * 
 	 * 1) onNewTurn: makes list of locked draughts pieces 
 	 * 2) createTiles: creates tiles based on boardsize
-	 * 3) Stores the selectedDraughtsPiece: SETTER if there are locked draugts pieces it shows the highlights
+	 * 3) Stores the selectedDraughtsPiece: SETTER if there are locked draughts pieces it shows the highlights
 	 * 4) Stores the selectedTile: SETTER very bloated does TOO MUCH
 	 * 5) highlightTiles: iterate through all Tiles, match with passed arraycollection
 	 * 6) endOFTurnCleanup: 
 	 *  
 	 */
-	
-	
-	//Method that deals with moving the playing piece but returns a Playing piece if a piece was jumped
 	
 	public class GameBoard extends EventDispatcher
 	{
@@ -50,9 +48,14 @@ package hatstand.models
 		[Bindable]
 		public function set tiles(value:ArrayCollection) : void { _tiles = value; }
 		
+		private function get draughtsPieceTotalPerPlayer() : int
+		{
+			return _size * 1.5;
+		}
+		
 		private function onNewTurn(e:Event) : void
 		{
-			for each(var draughtsPiece:DraughtsPiece in game.activePlayer.activePieces)
+			for each(var draughtsPiece:DraughtsPiece in game.activePlayer.playingPieces)
 			{
 				if(Rules.getInstance().canCapturePiece(draughtsPiece).length) lockedDraughtsPieces.addItem(draughtsPiece); 
 			}
@@ -96,8 +99,6 @@ package hatstand.models
 
 		//Selected tile: by clicking on a tile.
 		
-		//TODO: Tile movement code in there twice.
-		//	too many ifs
 		public function get selectedTile() : Tile { return _selectedTile; }
 		public function set selectedTile(value:Tile) : void
 		{
@@ -110,6 +111,8 @@ package hatstand.models
 				if(capturedDraughtsPiece)
 				{
 					capturedDraughtsPiece.isActive = false;
+					var itemIndex:int = game.opponentPlayer.playingPieces.getItemIndex(capturedDraughtsPiece);
+					if(itemIndex != -1) game.opponentPlayer.playingPieces.removeItemAt(itemIndex);
 
 					//We need to check if we can jump again
 					var chainedCoordinates:ArrayCollection = Rules.getInstance().canCapturePiece(); 
@@ -127,24 +130,6 @@ package hatstand.models
 			}
 		}
 		
-		private function updateKingStatus() : void
-		{
-			//Check if we've hit the top or bottom of the board
-			//Check if we have enough pieces to make a king
-			if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1)
-			{
-				//Should be easier to get number of captured pieces
-				var numberOfTakenPieces:int = selectedDraughtsPiece.owner.playingPieces.length - selectedDraughtsPiece.owner.activePieces.length;
-				var numberOfKings:int = 0;
-				for each(var draughtsPiece:DraughtsPiece in selectedDraughtsPiece.owner.activePieces)
-				{
-					if(draughtsPiece.isKing) numberOfKings++;
-				}
-				
-				if(numberOfKings < numberOfTakenPieces) selectedDraughtsPiece.makeKing();
-			}	
-		}
-		
 		private function moveDraughtsPiece() : DraughtsPiece
 		{
 			var capturedDraughtsPiece:DraughtsPiece;
@@ -155,7 +140,7 @@ package hatstand.models
 				var y:int = Math.max(selectedTile.y, selectedDraughtsPiece.y) - 1;
 				
 				//Once removed from active pieces, we then need to remove the actual draughts piece from the view
-				for each(var draughtsPiece:DraughtsPiece in game.activePlayer.activePieces)
+				for each(var draughtsPiece:DraughtsPiece in game.opponentPlayer.playingPieces)
 				{
 					if(draughtsPiece.x == x && draughtsPiece.y == y) 
 					{
@@ -168,6 +153,24 @@ package hatstand.models
 			selectedDraughtsPiece.coordinate = [selectedTile.x, selectedTile.y];
 			
 			return capturedDraughtsPiece;
+		}
+		
+		private function updateKingStatus() : void
+		{
+			//Check if we've hit the top or bottom of the board
+			//Check if we have enough pieces to make a king
+			if(selectedDraughtsPiece.y == 0 || selectedDraughtsPiece.y == _size-1)
+			{
+				//Should be easier to get number of captured pieces
+				var numberOfTakenPieces:int = draughtsPieceTotalPerPlayer - selectedDraughtsPiece.owner.playingPieces.length;
+				var numberOfKings:int = 0;
+				for each(var draughtsPiece:DraughtsPiece in selectedDraughtsPiece.owner.playingPieces)
+				{
+					if(draughtsPiece.isKing) numberOfKings++;
+				}
+				
+				if(numberOfKings < numberOfTakenPieces) selectedDraughtsPiece.makeKing();
+			}	
 		}
 		
 		/*Logic here determines how far we've jumped (if greater than 1 tile in any direction we've jumped

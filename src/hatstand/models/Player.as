@@ -25,21 +25,21 @@ package hatstand.models
 			if(direction == DraughtsPiece.DIRECTION_DOWN) _playingPieces = generatePieces(direction, 0);
 			if(!_playingPieces) throw new Error("Error in creating playing pieces");
 			
-			activePieces.addEventListener(CollectionEvent.COLLECTION_CHANGE, onPlayingPiecesUpdated);
+			playingPieces.addEventListener(CollectionEvent.COLLECTION_CHANGE, onPlayingPiecesUpdated);
 		}
 		
 		public function get playingPieces() : ArrayCollection { return _playingPieces; }
-		
-		//Wasteful, making a new array collection every time we get activePieces
-		public function get activePieces() : ArrayCollection
-		{
-			var pieces:ArrayCollection = new ArrayCollection();
-			for each(var draughtsPiece:DraughtsPiece in playingPieces)
-			{
-				if(draughtsPiece.isActive) pieces.addItem(draughtsPiece);
-			}
-			return pieces;
-		}
+//		
+//		//Wasteful, making a new array collection every time we get activePieces
+//		public function get activePieces() : ArrayCollection
+//		{
+//			var pieces:ArrayCollection = new ArrayCollection();
+//			for each(var draughtsPiece:DraughtsPiece in playingPieces)
+//			{
+//				if(draughtsPiece.isActive) pieces.addItem(draughtsPiece);
+//			}
+//			return pieces;
+//		}
 		
 		private function generatePieces(direction:int, startYcoord:int) : ArrayCollection
 		{
@@ -60,8 +60,8 @@ package hatstand.models
 		
 		private function onPlayingPiecesUpdated(e:CollectionEvent) : void
 		{
-			trace("Number of pieces: " + activePieces.length);
-			if(activePieces.length == 0) dispatchEvent(new Event("allPiecesCaptured"));
+			trace("Number of pieces: " + playingPieces.length);
+			if(playingPieces.length == 0) dispatchEvent(new Event("allPiecesCaptured"));
 		}
 	}
 }

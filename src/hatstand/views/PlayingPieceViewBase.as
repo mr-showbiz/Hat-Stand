@@ -20,6 +20,7 @@ package hatstand.views
 			_draughtsPiece = value;
 
 			draughtsPiece.addEventListener("draughtsPieceCaptured", onDraughtsPieceCapture);
+			draughtsPiece.addEventListener("onKinged", onKinged);
 			
 			addEventListener(MouseEvent.ROLL_OVER, onRollOver);
 			addEventListener(MouseEvent.ROLL_OUT, onRollOut);
@@ -28,6 +29,11 @@ package hatstand.views
 		public function get draughtsPiece() : DraughtsPiece
 		{
 			return _draughtsPiece;
+		}
+		
+		private function onKinged(e:Event) : void
+		{
+			alpha = 0.5;
 		}
 		
 		private function onRollOver(e:MouseEvent) : void

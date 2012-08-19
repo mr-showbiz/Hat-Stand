@@ -45,6 +45,11 @@ package hatstand.models
 		
 		public function get gameBoard() : GameBoard { return _gameBoard; }
 
+		public function get opponentPlayer() : Player
+		{
+			return activePlayer == _player1 ? _player2 : _player1;
+		}
+		
 		private function onEndOfTurn(e:Event) : void
 		{
 			activePlayer = activePlayer == _player1 ? _player2 : _player1;

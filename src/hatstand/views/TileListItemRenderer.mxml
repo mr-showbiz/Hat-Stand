@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				autoDrawBackground="true">
+	
+	<fx:Script>
+		<![CDATA[
+			import hatstand.models.DraughtsPiece;
+			import hatstand.models.FakeUtils;
+			
+			[Bindable(event="dataChange")]
+			private function get draughtsPiece() : DraughtsPiece
+			{
+				return data as DraughtsPiece;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:HGroup>
+		<s:Label text="Pos: { draughtsPiece.x }, { draughtsPiece.y }"/>
+		<s:Label text="Owner: { draughtsPiece.owner.name }"/>
+		<s:Label text="({ FakeUtils.getObjectMemoryHash(draughtsPiece.owner) })"/>
+		
+	</s:HGroup>
+	
+</s:ItemRenderer>

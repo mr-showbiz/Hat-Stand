@@ -93,7 +93,7 @@ package hatstand.models
 			for each(var coord:Array in invalidCoords)
 			{
 				//Check if we are attempting to jump over our own pieces
-				if(!isCoordinateOccupied(coord, selectedPlayingPiece.owner.activePieces))
+				if(!isCoordinateOccupied(coord, selectedPlayingPiece.owner.playingPieces))
 				{
 					/* If the invalid coordinates x value minus our selected pieces x value is greater than 0 then we must
 					plus 1 to the invalid coordinates x value to carry the diagonal through to the otherside.
@@ -133,7 +133,7 @@ package hatstand.models
 		
 		private function get allActivePieces() : ArrayCollection
 		{
-			return new ArrayCollection(game.player1.activePieces.source.concat(game.player2.activePieces.source));
+			return new ArrayCollection(game.player1.playingPieces.source.concat(game.player2.playingPieces.source));
 		}
 		
 		// TODO: method name doesn't make sense with its return value

@@ -91,6 +91,8 @@ package hatstand.models
 		{
 			_isKing = true;
 			direction = DIRECTION_ALL;
+			
+			dispatchEvent(new Event("onKinged"));
 		}
 		
 	}
